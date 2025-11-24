@@ -1,0 +1,60 @@
+/* Mis estilos personalizados para el portfolio */
+
+/* ------------------------------------------------ */
+/* Barras de habilidades */
+/* ------------------------------------------------ */
+.skill-bar {
+  height: 20px; /* altura de la barra */
+  background: #ddd; /* color gris de fondo */
+  border-radius: 10px; /* bordes redondeados */
+  overflow: hidden; /* para que el progreso no se salga */
+  margin-top: 5px; /* un poco de separación con el texto */
+}
+
+.skill-progress {
+  height: 100%;
+  background-color: #0d6efd; /* azul profesional */
+  width: 0; /* inicializamos en 0 para animación */
+  border-radius: 10px; 
+  transition: width 1.5s ease-in-out; /* animación suave */
+}
+
+/* ------------------------------------------------ */
+/* Enlaces */
+/* ------------------------------------------------ */
+a:hover {
+  text-decoration: underline; /* para que se note al pasar el ratón */
+}
+
+/* ------------------------------------------------ */
+/* Secciones */
+/* ------------------------------------------------ */
+section {
+  margin-top: 50px; /* separación entre secciones */
+  margin-bottom: 50px;
+}
+
+/* ------------------------------------------------ */
+/* Cabecera */
+/* ------------------------------------------------ */
+header {
+  background: #0d6efd; /* azul principal */
+  color: white; /* texto blanco */
+}
+
+/* ------------------------------------------------ */
+/* Responsividad extra (opcional) */
+/* ------------------------------------------------ */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 3rem; /* más pequeño en móviles */
+  }
+
+  header p {
+    font-size: 1.2rem;
+  }
+
+  section {
+    padding: 20px;
+  }
+}

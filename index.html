@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio de Rafael Deusto</title>
+
+  <!-- Aquí cargo Tailwind para poder usar clases modernas y responsive sin complicarme -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome para poder poner iconos de redes, email, github, linkedin -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- AOS para animaciones al hacer scroll y que quede más profesional -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+  <!-- Mis estilos personalizados en style.css -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Esta es la cabecera con mi nombre, título y menú (de momento simple) -->
+<header class="bg-blue-600 text-white py-16 text-center" data-aos="fade-down">
+  <h1 class="text-5xl font-bold">Rafael Deusto Espinosa</h1>
+  <p class="text-xl mt-2">Desarrollador Web en formación | Grado Superior DAW</p>
+  
+  <!-- Mi foto -->
+  <img src="img/fotoperfil.jpg" alt="Foto de Rafael Deusto" class="w-40 h-40 rounded-full mx-auto mt-6 border-4 border-white shadow-lg">
+</header>
+
+
+  <!-- Sección sobre mí donde cuento quién soy y mi historia -->
+  <section id="about" class="max-w-4xl mx-auto p-10" data-aos="fade-up">
+    <h2 class="text-4xl font-semibold mb-4">Sobre mí</h2>
+    <p>Soy Rafael, un joven de 22 años apasionado por la informática y la lógica. Nací en 2003 y desde pequeño me han gustado las matemáticas y la resolución de problemas. Tras iniciar Ingeniería Electrónica, descubrí que mi verdadera vocación estaba en la informática. Mejoré mi inglés en Dublín trabajando en Starbucks, donde desarrollé habilidades de comunicación. Actualmente estoy terminando el Grado Superior de Desarrollo de Aplicaciones Web (DAW), combinando mi pasión por la lógica y la programación.</p>
+    <p class="mt-3"><strong>Inglés:</strong> B2 | <strong>Formación:</strong> Bachillerato tecnológico y Grado Superior DAW (en curso)</p>
+  </section>
+
+  <!-- Sección de habilidades donde muestro mis conocimientos y la barra se anima con JS -->
+  <section id="skills" class="bg-white py-10" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto p-10">
+      <h2 class="text-4xl font-semibold mb-6">Habilidades</h2>
+
+      <!-- Cada div representa una habilidad, data-skill indica el porcentaje que va a animar -->
+      <div class="mb-4">
+        <p class="font-semibold">HTML</p>
+        <div class="skill-bar"><div class="skill-progress" data-skill="90%"></div></div>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-semibold">CSS</p>
+        <div class="skill-bar"><div class="skill-progress" data-skill="60%"></div></div>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-semibold">JavaScript</p>
+        <div class="skill-bar"><div class="skill-progress" data-skill="70%"></div></div>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-semibold">Java</p>
+        <div class="skill-bar"><div class="skill-progress" data-skill="80%"></div></div>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-semibold">Python</p>
+        <div class="skill-bar"><div class="skill-progress" data-skill="90%"></div></div>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-semibold">PHP</p>
+        <div class="skill-bar"><div class="skill-progress" data-skill="30%"></div></div>
+      </div>
+
+      <div class="mb-4">
+        <p class="font-semibold">SQL</p>
+        <div class="skill-bar"><div class="skill-progress" data-skill="90%"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sección de proyectos, aquí luego irán los proyectos que haga -->
+  <section id="projects" class="max-w-4xl mx-auto p-10" data-aos="fade-up">
+    <h2 class="text-4xl font-semibold mb-6">Proyectos</h2>
+    <p>Aquí irán mis proyectos con capturas y enlaces a GitHub o demos en vivo cuando los cree.</p>
+  </section>
+
+  <!-- Sección de contacto, con email, LinkedIn y GitHub -->
+  <section id="contact" class="bg-white py-10" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto p-10 text-center">
+      <h2 class="text-4xl font-semibold mb-6">Contacto</h2>
+      <p class="mb-2"><i class="fas fa-envelope"></i> <a href="mailto:radeusto@gmail.com" class="text-blue-600 hover:underline">radeusto@gmail.com</a></p>
+      <p class="mb-2"><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/rafael-deusto-966447296/" target="_blank" class="text-blue-600 hover:underline">LinkedIn</a></p>
+      <p><i class="fab fa-github"></i> <a href="https://github.com/faliideusto" target="_blank" class="text-blue-600 hover:underline">GitHub</a></p>
+    </div>
+  </section>
+
+  <!-- Scripts al final para que cargue todo primero -->
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000 });
+  </script>
+</body>
+</html>
