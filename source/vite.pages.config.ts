@@ -2,7 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: command === 'build' ? '/portfolio/' : '/',
+  base: command === 'build' ? '/Portfolio/' : '/',
   server: { port: 5173 },
   build: { outDir: 'dist-pages' },
 }));
+
