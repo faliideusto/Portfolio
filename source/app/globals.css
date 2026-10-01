@@ -16,5 +16,7 @@ h1{font-size:clamp(64px,12.35vw,205px);letter-spacing:-.035em}
 /* Preserve the full portrait at every screen width. */
 .portrait{height:auto;aspect-ratio:1080/1346;width:100%;max-width:400px;justify-self:center;background:#101314}
 .portrait img{object-position:center;transform:none}
-.project-gallery{min-width:0}.project-gallery .tesis-visual{margin:0}.project-gallery .tesis-visual>img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:top;background:#f5f6f8}
-@media(max-width:700px){.portrait{max-width:320px}.project-gallery .tesis-visual>img{max-height:none}}
+.project-gallery{min-width:0}.project-gallery .tesis-visual{margin:0}.project-gallery .tesis-visual img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;object-position:top;background:#f5f6f8}
+@media(max-width:700px){.portrait{max-width:320px}.project-gallery .tesis-visual img{max-height:none}}
+
+.project .project-preview{display:block}.project-preview:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
