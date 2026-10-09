@@ -36,7 +36,10 @@ function MaxiJuegosProject(){
   const [playing,setPlaying] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
-  const play = ()=>{setPlaying(true);stage.current?.scrollIntoView({block:'center',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})};
+  const play = ()=>{
+    // Phones and tablets: the card is too small to play in, so the game opens on its own page (landscape, touch controls).
+    if(window.matchMedia('(hover: none) and (pointer: coarse)').matches){window.location.href = GAME_URL;return}
+    setPlaying(true);stage.current?.scrollIntoView({block:'center',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})};
   const stop = ()=>{if(document.fullscreenElement)document.exitFullscreen();setPlaying(false)};
   const fullscreen = ()=>{if(document.fullscreenElement)document.exitFullscreen();else stage.current?.requestFullscreen?.().then(()=>frame.current?.focus()).catch(()=>{})};
   return <article className="project game-project" data-reveal>
@@ -45,9 +48,9 @@ function MaxiJuegosProject(){
       <div className="game-bar"><span className={`game-status${playing?' is-live':''}`}><i aria-hidden="true"/>{playing?'EN JUEGO':'DEMO JUGABLE'}</span><span className="game-bar-title">Tú contra 3 bots</span>{playing&&<div className="game-tools"><button type="button" onClick={fullscreen} aria-label="Pantalla completa"><ArrowsOut size={18}/></button><button type="button" onClick={stop} aria-label="Cerrar el juego"><X size={18}/></button></div>}</div>
       <div className="game-stage" ref={stage}>{playing
         ? <iframe ref={frame} src={GAME_URL} title="MaxiJuegos: partida contra bots" allow="fullscreen; gamepad" onLoad={()=>frame.current?.focus()}/>
-        : <button className="game-poster" type="button" onClick={play} aria-label="Jugar a MaxiJuegos contra bots"><img src={`${import.meta.env.BASE_URL}assets/maxijuegos-carrera.jpg`} alt="Carrera de Ruinas: cinco personajes corren por unas ruinas flotantes en 3D" width="1280" height="720" loading="lazy"/><span className="game-play" aria-hidden="true"><Play size={32} weight="fill"/></span><span className="game-cta">Jugar en el navegador<small>Sin instalar nada · descarga de unos 10 MB · sin sonido</small></span></button>}</div>
+        : <button className="game-poster" type="button" onClick={play} aria-label="Jugar a MaxiJuegos contra bots"><img src={`${import.meta.env.BASE_URL}assets/maxijuegos-carrera.jpg`} alt="Carrera de Ruinas: cinco personajes corren por unas ruinas flotantes en 3D" width="1280" height="720" loading="lazy"/><span className="game-play" aria-hidden="true"><Play size={32} weight="fill"/></span><span className="game-cta">Jugar en el navegador<small>Sin instalar nada · descarga de unos 10 MB · sin sonido · también en móvil</small></span></button>}</div>
       <ul className="game-strip" aria-label="Algunos de los minijuegos">{gameShots.map(shot=><li key={shot.file}><img src={`${import.meta.env.BASE_URL}assets/${shot.file}`} alt={shot.alt} width="640" height="360" loading="lazy"/><span>{shot.name}</span></li>)}</ul>
-      <figcaption><span className="game-keys"><kbd>WASD</kbd> moverte <kbd>Espacio</kbd> o clic, acción</span><span className="game-touch">Pensado para teclado y ratón: mejor en ordenador</span><span>14 MINIJUEGOS</span></figcaption>
+      <figcaption><span className="game-keys"><kbd>WASD</kbd> moverte <kbd>Espacio</kbd> o clic, acción</span><span className="game-touch">Se abre a pantalla completa, con joystick y botones táctiles</span><span>14 MINIJUEGOS</span></figcaption>
     </figure>
   </article>
 }
