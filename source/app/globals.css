@@ -229,3 +229,8 @@ body.menu-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.game-play,.game-status.is-live i{animation:none}
 .game-poster:hover img,.game-poster:hover .game-play{transform:none}
 }
+.demo-note{margin:14px 0 0;font-size:13px!important;line-height:1.5!important;color:var(--muted)}
+.contact-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.copy-email{display:inline-flex;align-items:center;gap:10px;padding:24px 28px;border:1px solid #4a5354;border-radius:99px;background:none;color:var(--foreground);font:inherit;font-size:16px;font-weight:600;cursor:pointer}
+.copy-email:hover{border-color:var(--accent);color:var(--accent)}
+.copy-email:active{transform:scale(.98)}
