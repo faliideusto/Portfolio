@@ -30,6 +30,17 @@ body{color:#eff1ee;background:#000;overflow:hidden;touch-action:none;font-family
 .back:hover{color:#83d3c7}
 .embedded .back{display:none}
 #notice{display:none;max-width:480px;font-size:14px;line-height:1.6;color:#eff1ee}
+/* Móvil y tableta: se juega en horizontal, con joystick y botones en pantalla. */
+.keys-touch,#exit,#rotate{display:none}
+.touch .keys-desktop{display:none}
+.touch .keys-touch{display:flex}
+.touch #exit{position:fixed;top:8px;left:8px;z-index:4;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#181818cc;border:1px solid #ffffff33;color:#eff1ee;font-size:18px;line-height:1;text-decoration:none}
+@media(orientation:portrait){.touch #rotate{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;background:#000;text-align:center}}
+#rotate svg{width:72px;height:72px;color:#83d3c7;animation:tilt 2.4s cubic-bezier(.32,.72,0,1) infinite}
+#rotate p{margin:0;font-size:24px;font-weight:700;letter-spacing:-.5px}
+#rotate small{font-size:14px;color:#b9c0bf}
+@keyframes tilt{0%,20%{transform:rotate(0)}60%,100%{transform:rotate(-90deg)}}
+@media(prefers-reduced-motion:reduce){#rotate svg{animation:none}}
 @media(prefers-reduced-motion:reduce){#loader,.bar i{transition:none}.bar.indeterminate i{animation:none;transform:scaleX(1)}}
 </style>
 </head>
@@ -44,12 +55,20 @@ body{color:#eff1ee;background:#000;overflow:hidden;touch-action:none;font-family
 	<div class="bar indeterminate" id="bar"><i></i></div>
 	<div class="status" id="status" role="status">Cargando el juego…</div>
 	<div id="notice"></div>
-	<div class="keys" aria-label="Controles"><span>WASD · moverte</span><span>Espacio o clic · acción</span><span>E · golpear</span></div>
+	<div class="keys keys-desktop" aria-label="Controles"><span>WASD · moverte</span><span>Espacio o clic · acción</span><span>E · golpear</span></div>
+	<div class="keys keys-touch" aria-label="Controles"><span>Joystick · moverte</span><span>Botones en pantalla · acción</span></div>
+</div>
+
+<a id="exit" href="../#proyectos" aria-label="Salir del juego y volver al portfolio">✕</a>
+<div id="rotate" role="status">
+	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></svg>
+	<p>Gira el móvil</p>
+	<small>MaxiJuegos se juega en horizontal</small>
 </div>
 
 <script src="index.js"></script>
 <script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":478596,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":484448,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
@@ -61,6 +80,22 @@ const engine = new Engine(GODOT_CONFIG);
 	const notice = document.getElementById('notice');
 	if (window.self !== window.top) {
 		document.documentElement.classList.add('embedded');
+	}
+	if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+		document.documentElement.classList.add('touch');
+		// Con el primer toque: pantalla completa y horizontal donde el navegador lo permite (Android).
+		window.addEventListener('touchend', function () {
+			const root = document.documentElement;
+			if (!root.requestFullscreen || document.fullscreenElement) {
+				return;
+			}
+			root.requestFullscreen({ navigationUI: 'hide' }).then(function () {
+				if (screen.orientation && screen.orientation.lock) {
+					return screen.orientation.lock('landscape');
+				}
+				return undefined;
+			}).catch(function () {});
+		}, { once: true });
 	}
 
 	function fail(err) {
