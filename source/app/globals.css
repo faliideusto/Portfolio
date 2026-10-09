@@ -179,3 +179,4 @@ body.menu-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.tagline{height:auto;padding-block:96px}
 .tagline-sticky{position:static;height:auto}
 }
+.hero-name .char{padding-right:.08em;margin-right:-.08em}
