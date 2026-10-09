@@ -21,3 +21,48 @@ h1{font-size:clamp(64px,12.35vw,205px);letter-spacing:-.035em}
 
 .project .project-preview{display:block}.project-preview:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
 .hero-note a + a{margin-top:14px}.contact-links{flex-wrap:wrap}
+
+
+/* Recruiter focus: role, availability and CV visible at a glance. */
+:root{--muted:#b9c0bf}
+.nav-cv{padding:10px 16px;border-radius:99px;background:var(--accent);color:var(--primary-foreground)!important;font-weight:600;transition:transform .2s,background .2s}
+.nav-cv:hover{background:var(--foreground)}
+.nav-cv:active,.pill:active,.btn:active{transform:scale(.98)}
+.hero-top{font-size:13px}
+.availability{display:inline-flex;align-items:center;gap:10px;color:var(--foreground);letter-spacing:.4px}
+.availability i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px #83d3c733}
+h1{font-size:clamp(56px,9.4vw,156px);margin:24px 0 12px}
+.hero-role{margin:0 0 40px;font-size:clamp(20px,2vw,30px);font-weight:500;letter-spacing:-.5px;display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline}
+.hero-role span{color:var(--muted);font-size:.75em;font-weight:400}
+.intro-copy{font-size:17px;line-height:1.7;max-width:440px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-actions .pill{margin-top:0;font-size:16px;font-weight:600}
+.ghost{border:1px solid #4a5354;color:var(--foreground)}
+.ghost:hover{color:var(--primary-foreground)}
+.eyebrow{font-size:13px}
+.section-aside{font-size:15px}
+.project p{font-size:16px}
+.contribution>span{font-size:12px}
+.contribution p{font-size:15px}
+.project-index span{font-size:12px}
+.tags span{font-size:13px;border-color:#4a5354}
+.project-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.project a.btn{margin-top:0;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:99px;font-size:15px;font-weight:600;transition:transform .2s,background .2s,color .2s}
+.project a.btn-primary{background:var(--accent);color:var(--primary-foreground)}
+.project a.btn-primary:hover{background:var(--foreground)}
+.project a.btn-secondary{border:1px solid #4a5354;color:var(--foreground)}
+.project a.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.experience-note>span{font-size:13px;font-weight:600}
+.experience-note p{font-size:17px;color:var(--foreground)}
+
+@media(max-width:700px){.nav-secondary{display:none}
+nav{gap:16px;font-size:13px}
+.nav-cv{padding:9px 14px}
+.hero-top{font-size:11px;letter-spacing:.3px}
+h1{font-size:12.4vw;margin:22px 0 10px}
+.hero-role{font-size:20px;margin-bottom:28px}
+.intro-copy{font-size:16px}
+.intro>p{font-size:30px;margin-top:16px}
+.eyebrow{font-size:12px}
+.experience-note p{font-size:16px}
+}
