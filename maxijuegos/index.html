@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+<meta name="description" content="MaxiJuegos: party game de minijuegos hecho en Godot. Juega contra 3 bots en tu navegador.">
+<title>MaxiJuegos — Rafael Deusto</title>
+<link rel="icon" type="image/png" href="index.icon.png">
+<link rel="apple-touch-icon" href="index.apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap">
+<style>
+html,body,#canvas{margin:0;padding:0;border:0}
+body{color:#eff1ee;background:#000;overflow:hidden;touch-action:none;font-family:Manrope,system-ui,sans-serif}
+#canvas{display:block}
+#canvas:focus{outline:none}
+#loader{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:24px;background:#000;text-align:center;transition:opacity .6s cubic-bezier(.32,.72,0,1)}
+#loader.done{opacity:0;pointer-events:none}
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:1.8px;color:#b9c0bf}
+.title{margin:0;font-size:clamp(40px,9vw,88px);font-weight:700;letter-spacing:-.05em;line-height:.95}
+.title span{color:#83d3c7}
+.bar{width:min(320px,70vw);height:2px;border-radius:2px;background:#313131;overflow:hidden}
+.bar i{display:block;height:100%;width:100%;background:#83d3c7;transform-origin:left;transform:scaleX(0);transition:transform .3s linear}
+.bar.indeterminate i{animation:slide 1.4s ease-in-out infinite}
+@keyframes slide{0%{transform:translateX(-100%) scaleX(.4)}100%{transform:translateX(100%) scaleX(.4)}}
+.status{min-height:20px;font-size:13px;color:#b9c0bf;font-variant-numeric:tabular-nums}
+.keys{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;font-size:12px;color:#b9c0bf}
+.keys span{border:1px solid #4a5354;border-radius:30px;padding:7px 12px}
+.back{position:fixed;top:24px;left:24px;z-index:3;font-size:13px;color:#b9c0bf;text-decoration:none}
+.back:hover{color:#83d3c7}
+.embedded .back{display:none}
+#notice{display:none;max-width:480px;font-size:14px;line-height:1.6;color:#eff1ee}
+@media(prefers-reduced-motion:reduce){#loader,.bar i{transition:none}.bar.indeterminate i{animation:none;transform:scaleX(1)}}
+</style>
+</head>
+<body>
+<canvas id="canvas">Tu navegador no admite el elemento canvas.</canvas>
+<noscript>Este juego necesita JavaScript.</noscript>
+
+<div id="loader">
+	<a class="back" href="../#proyectos">← Volver al portfolio</a>
+	<span class="eyebrow">PARTY GAME · TÚ CONTRA 3 BOTS</span>
+	<p class="title">Maxi<span>Juegos</span></p>
+	<div class="bar indeterminate" id="bar"><i></i></div>
+	<div class="status" id="status" role="status">Cargando el juego…</div>
+	<div id="notice"></div>
+	<div class="keys" aria-label="Controles"><span>WASD · moverte</span><span>Espacio o clic · acción</span><span>E · golpear</span></div>
+</div>
+
+<script src="index.js"></script>
+<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":478596,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_THREADS_ENABLED = false;
+const engine = new Engine(GODOT_CONFIG);
+
+(function () {
+	const loader = document.getElementById('loader');
+	const bar = document.getElementById('bar');
+	const fill = bar.firstElementChild;
+	const status = document.getElementById('status');
+	const notice = document.getElementById('notice');
+	if (window.self !== window.top) {
+		document.documentElement.classList.add('embedded');
+	}
+
+	function fail(err) {
+		console.error(err);
+		const text = err instanceof Error ? err.message : (typeof err === 'string' ? err : 'Ha ocurrido un error desconocido.');
+		bar.style.display = 'none';
+		status.textContent = 'No se ha podido cargar el juego.';
+		notice.textContent = text;
+		notice.style.display = 'block';
+	}
+
+	const missing = Engine.getMissingFeatures({ threads: GODOT_THREADS_ENABLED });
+	if (missing.length !== 0) {
+		fail('A tu navegador le falta: ' + missing.join(', ') + '. Prueba con una versión reciente de Chrome, Edge o Firefox.');
+		return;
+	}
+
+	engine.startGame({
+		onProgress: function (current, total) {
+			if (current > 0 && total > 0) {
+				const ratio = Math.min(1, current / total);
+				bar.classList.remove('indeterminate');
+				fill.style.transform = 'scaleX(' + ratio + ')';
+				status.textContent = 'Cargando el juego… ' + Math.round(ratio * 100) + ' %';
+			}
+		},
+	}).then(function () {
+		loader.classList.add('done');
+		setTimeout(function () { loader.remove(); }, 700);
+		document.getElementById('canvas').focus();
+	}, fail);
+}());
+</script>
+</body>
+</html>

@@ -183,3 +183,49 @@ body.menu-open{overflow:hidden}
 
 /* Surname keeps the accent colour; the first name keeps the metallic gradient. */
 .hero-name .name-line + .name-line .char{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--accent)}
+
+/* Project 04: MaxiJuegos, playable inside the card. */
+.project button.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border:0;border-radius:99px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;background:var(--accent);color:var(--primary-foreground);transition:transform .2s,background .2s}
+.project button.btn:hover{background:var(--foreground)}
+.game-visual{margin:0;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.game-bar{display:flex;align-items:center;gap:16px;min-height:48px;padding:0 8px 0 16px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+.game-status{display:inline-flex;align-items:center;gap:8px;font-weight:600;letter-spacing:1.3px;color:var(--foreground)}
+.game-status i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.game-status.is-live i{background:var(--accent);animation:pulse 2.4s var(--ease) infinite}
+.game-tools{display:flex;gap:4px;margin-left:auto}
+.game-tools button{display:grid;place-items:center;width:32px;height:32px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.game-tools button:hover{background:var(--surface-2);color:var(--foreground)}
+.game-tools button:focus-visible{outline-offset:0}
+.game-stage{position:relative;aspect-ratio:16/9;background:#000}
+.game-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.game-stage:fullscreen{aspect-ratio:auto}
+.game-poster{position:absolute;inset:0;display:block;width:100%;height:100%;padding:0;border:0;overflow:hidden;background:#000;color:#fff;font:inherit;text-align:left;cursor:pointer}
+.game-poster:focus-visible{outline-offset:-4px}
+.project .game-poster img{display:block;width:100%;height:100%;object-fit:cover;border-radius:0;transition:transform 1.2s var(--ease)}
+.game-poster::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#00000033 0%,#00000000 40%,#000000cc 100%)}
+.game-poster:hover img{transform:scale(1.04)}
+.game-play{position:absolute;z-index:1;left:50%;top:50%;display:grid;place-items:center;width:88px;height:88px;margin:-44px 0 0 -44px;padding-left:4px;border-radius:50%;background:var(--accent);color:var(--primary-foreground);box-shadow:0 0 0 0 #83d3c766;animation:play-ring 2.4s var(--ease) infinite;transition:transform .7s var(--ease),background .7s var(--ease)}
+.game-poster:hover .game-play{transform:scale(1.08);background:#fff}
+@keyframes play-ring{70%,100%{box-shadow:0 0 0 24px #83d3c700}}
+.game-cta{position:absolute;z-index:1;left:24px;right:24px;bottom:20px;display:flex;flex-direction:column;gap:4px;font-size:20px;font-weight:600;letter-spacing:-.4px}
+.game-cta small{font-size:13px;font-weight:400;letter-spacing:0;color:#ffffffb3}
+.game-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;padding:8px;list-style:none;border-top:1px solid var(--border)}
+.game-strip li{position:relative;overflow:hidden;border-radius:8px}
+.project .game-strip img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:0}
+.game-strip span{position:absolute;inset:auto 0 0;padding:24px 12px 8px;background:linear-gradient(180deg,#00000000,#000000cc);font-size:12px;font-weight:600;color:#fff}
+.game-visual figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.game-visual figcaption span:last-child{font-size:10px;letter-spacing:1px;color:var(--accent);white-space:nowrap}
+.game-keys kbd{display:inline-block;margin:0 4px 0 8px;padding:2px 8px;border:1px solid #4a5354;border-radius:6px;font:inherit;font-size:11px;color:var(--foreground)}
+.game-keys kbd:first-child{margin-left:0}
+.game-touch{display:none}
+@media(hover:none) and (pointer:coarse){.game-keys{display:none}
+.game-touch{display:inline}
+}
+@media(max-width:700px){.game-play{width:64px;height:64px;margin:-32px 0 0 -32px}
+.game-cta{left:16px;right:16px;bottom:12px;font-size:16px}
+.game-cta small{font-size:12px}
+.game-strip span{font-size:11px;padding:16px 8px 8px}
+}
+@media(prefers-reduced-motion:reduce){.game-play,.game-status.is-live i{animation:none}
+.game-poster:hover img,.game-poster:hover .game-play{transform:none}
+}
