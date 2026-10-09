@@ -180,3 +180,6 @@ body.menu-open{overflow:hidden}
 .tagline-sticky{position:static;height:auto}
 }
 .hero-name .char{padding-right:.08em;margin-right:-.08em}
+
+/* Surname keeps the accent colour; the first name keeps the metallic gradient. */
+.hero-name .name-line + .name-line .char{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--accent)}
