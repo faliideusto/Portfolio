@@ -60,7 +60,7 @@ function MaxiJuegosProject(){
         ? <iframe ref={frame} src={GAME_URL} title="MaxiJuegos: partida contra bots" allow="fullscreen; gamepad" onLoad={()=>frame.current?.focus()}/>
         : <button className="game-poster" type="button" onClick={play} aria-label="Jugar a MaxiJuegos contra bots"><img src={`${import.meta.env.BASE_URL}assets/maxijuegos-carrera.jpg`} alt="Carrera de Ruinas: cinco personajes corren por unas ruinas flotantes en 3D" width="1280" height="720" loading="lazy"/><span className="game-play" aria-hidden="true"><Play size={32} weight="fill"/></span><span className="game-cta">Jugar en el navegador<small>Sin instalar nada · descarga de unos 10 MB · sin sonido · también en móvil</small></span></button>}</div>
       <ul className="game-strip" aria-label="Algunos de los minijuegos">{gameShots.map(shot=><li key={shot.file}><img src={`${import.meta.env.BASE_URL}assets/${shot.file}`} alt={shot.alt} width="640" height="360" loading="lazy"/><span>{shot.name}</span></li>)}</ul>
-      <figcaption><span className="game-keys"><kbd>WASD</kbd> moverte <kbd>Espacio</kbd> o clic, acción</span><span className="game-touch">Se abre a pantalla completa, con joystick y botones táctiles</span><span>14 MINIJUEGOS</span></figcaption>
+      <figcaption><span className="game-keys"><kbd>WASD</kbd> moverte <kbd>Espacio</kbd> o clic, acción</span><span className="game-touch">Se abre a pantalla completa, con joystick y botones táctiles</span><span>24 MINIJUEGOS</span></figcaption>
     </figure>
   </article>
 }
