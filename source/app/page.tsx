@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, X } from '@phosphor-icons/react';
+import { ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, X } from '@phosphor-icons/react';
 import { SkillsSection } from './skills';
 import { CursorCircle } from './cursor';
+import { Hero, TechRibbon } from './hero';
 
 const CV_URL = `${import.meta.env.BASE_URL}assets/Rafael-Deusto-CV.pdf`;
 const EMAIL = 'radeusto@gmail.com';
@@ -24,9 +25,7 @@ const navLinks = [
 ];
 const tagline = 'Me gusta entender cómo funcionan las cosas y convertir ese aprendizaje en aplicaciones que se puedan usar.';
 
-function SplitName({text}:{text:string}){return <>{[...text].map((ch,i)=><span className="char" style={{'--i':i} as React.CSSProperties} key={i}>{ch}</span>)}</>}
 
-const technologies = ['Python', 'Django', 'Java', 'JavaScript', 'HTML & CSS', 'SQL', 'Git'];
 
 // What each project touches: the overview map and each card's breakdown share these areas.
 const areas = {
@@ -211,17 +210,8 @@ export default function Home(){
     <div className={`menu-overlay${menuOpen?' is-open':''}`} id="menu-movil" aria-hidden={!menuOpen}>
       <nav aria-label="Menú móvil">{navLinks.map((link,i)=><a key={link.id} href={`#${link.id}`} style={{'--d':i} as React.CSSProperties} tabIndex={menuOpen?0:-1} onClick={closeMenu}>{link.label}</a>)}<a className="menu-cv" href={CV_URL} download style={{'--d':navLinks.length} as React.CSSProperties} tabIndex={menuOpen?0:-1} onClick={closeMenu}>Descargar CV <Download size={20}/></a></nav>
     </div>
-    <section className="hero" id="inicio">
-      <div className="hero-top"><span className="availability"><i aria-hidden="true"/>Disponible para prácticas y primer empleo</span><span>JEREZ, ESPAÑA</span></div>
-      <h1 className="hero-name" aria-label="Rafael Deusto"><span className="name-line" aria-hidden="true"><SplitName text="RAFAEL"/></span> <span className="name-line" aria-hidden="true"><SplitName text="DEUSTO"/></span></h1>
-      <p className="hero-role">Desarrollador web junior <span>Python · Django · Java · JavaScript</span></p>
-      <div className="hero-bottom">
-        <div className="intro"><span className="eyebrow">CURIOSIDAD. CÓDIGO. CONSTANCIA.</span><p>De una idea<br/>a algo que funciona.</p><div className="intro-copy">Desarrollo aplicaciones web con Python, Java y JavaScript. Aprendo construyendo y busco mi primera oportunidad en un equipo de desarrollo.</div><div className="hero-actions"><a className="pill light" href={CV_URL} download>Descargar CV <Download size={18}/></a><a className="pill ghost" href="#proyectos">Ver proyectos <ArrowDown size={18}/></a></div></div>
-        <div className="portrait"><img src={`${import.meta.env.BASE_URL}img/fotoperfil.jpg`} alt="Rafael Deusto Espinosa" width="1080" height="1346" fetchPriority="high"/><span className="portrait-caption">RAFAEL DEUSTO ESPINOSA</span></div>
-        <div className="hero-note"><span className="asterisk" aria-hidden="true">✳</span><p>Un perfil junior.<br/>Muchas ganas<br/>de aportar.</p><a href="https://github.com/faliideusto" target="_blank" rel="noreferrer"><CodeXml size={18}/> GitHub <ArrowUpRight size={16}/></a><a href="https://www.linkedin.com/in/rafael-deusto-966447296/" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={16}/></a></div>
-      </div>
-    </section>
-    <div className="tech-ribbon" aria-label="Python, Django, Java, JavaScript, HTML y CSS, SQL, Git"><div className="tech-track" aria-hidden="true">{[0,1].map(copy=><div className="tech-set" key={copy}>{technologies.map(tech=><span key={tech}>{tech}<i>✳</i></span>)}</div>)}</div></div>
+    <Hero cvUrl={CV_URL}/>
+    <TechRibbon/>
     <section className="projects" id="proyectos">
       <div className="section-head" data-reveal><div><span className="eyebrow">01 / PROYECTOS SELECCIONADOS</span><p className="section-aside">Cuatro proyectos reales.<br/>La misma forma de aprender: hacer.</p></div><h2>Código que<br/><em>toma forma.</em></h2></div>
       <ProjectMap/>

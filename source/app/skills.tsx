@@ -21,7 +21,7 @@ function Brand({icon, color}: {icon: SimpleIcon; color?: string}) {
 const brand = (icon: SimpleIcon, light = false) => ({color: light ? 'var(--foreground)' : `#${icon.hex}`, icon: <Brand icon={icon} color={light ? 'currentColor' : undefined}/>});
 
 // Each entry is used in at least one real project (checked against the project repositories).
-const techs: Tech[] = [
+export const techs: Tech[] = [
   {name:'React', category:'frontend', usedIn:'Fito Raya · Portfolio', ...brand(siReact)},
   {name:'TypeScript', category:'frontend', usedIn:'Fito Raya · Aerointer · Portfolio', ...brand(siTypescript)},
   {name:'JavaScript', category:'frontend', usedIn:'Tesis · PadelBracket', ...brand(siJavascript)},
