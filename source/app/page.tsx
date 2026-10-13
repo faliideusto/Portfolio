@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, X } from '@phosphor-icons/react';
 import { SkillsSection } from './skills';
+import { CursorCircle } from './cursor';
 
 const CV_URL = `${import.meta.env.BASE_URL}assets/Rafael-Deusto-CV.pdf`;
 const EMAIL = 'radeusto@gmail.com';
@@ -198,6 +199,7 @@ export default function Home(){
 
   const closeMenu = ()=>setMenuOpen(false);
   return <main>
+    <CursorCircle/>
     <a className="skip-link" href="#proyectos">Saltar a los proyectos</a>
     <div className="scroll-progress" aria-hidden="true"/>
     <header className={`island${menuOpen?' is-open':''}`}>
