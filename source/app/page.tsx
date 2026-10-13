@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, X } from '@phosphor-icons/react';
+import { SkillsSection } from './skills';
 
 const CV_URL = `${import.meta.env.BASE_URL}assets/Rafael-Deusto-CV.pdf`;
 const EMAIL = 'radeusto@gmail.com';
@@ -25,12 +26,6 @@ const tagline = 'Me gusta entender cómo funcionan las cosas y convertir ese apr
 function SplitName({text}:{text:string}){return <>{[...text].map((ch,i)=><span className="char" style={{'--i':i} as React.CSSProperties} key={i}>{ch}</span>)}</>}
 
 const technologies = ['Python', 'Django', 'Java', 'JavaScript', 'HTML & CSS', 'SQL', 'Git'];
-const skillGroups = [
-  {number:'01',title:'Backend',detail:'Lógica, datos y aplicaciones web.',tools:['Python','Django','Java']},
-  {number:'02',title:'Frontend',detail:'Interfaces claras que se adaptan a cada pantalla.',tools:['JavaScript','HTML','CSS']},
-  {number:'03',title:'Bases de datos',detail:'Modelado y consultas para organizar la información.',tools:['SQL','MySQL']},
-  {number:'04',title:'Flujo de trabajo',detail:'Control de versiones y desarrollo asistido por IA.',tools:['Git','GitHub','Codex']},
-];
 
 // What each project touches: the overview map and each card's breakdown share these areas.
 const areas = {
@@ -235,7 +230,7 @@ export default function Home(){
     </section>
     <section className="tagline" aria-label="Lo que me mueve"><div className="tagline-sticky"><p>{tagline.split(' ').map((w,i)=><span className="word" key={i}>{w} </span>)}</p></div></section>
     <section className="about" id="sobre-mi"><div className="about-head" data-reveal><span className="eyebrow">02 / UN POCO SOBRE MÍ</span><span className="asterisk" aria-hidden="true">✳</span></div><h2 data-reveal>Aprender haciendo.<br/><em>Crecer en equipo.</em></h2><div className="about-body" data-reveal><span className="about-label">MÁS ALLÁ DEL CÓDIGO</span><div><p>Soy Rafael, desarrollador junior de Jerez. Me gusta entender cómo funcionan las cosas y convertir ese aprendizaje en aplicaciones que se puedan usar.</p><p>He completado la formación académica de Desarrollo de Aplicaciones Web y estoy pendiente de las prácticas. Busco un equipo donde aportar, recibir feedback y seguir aprendiendo con proyectos reales.</p><p>Uso la IA como apoyo durante el desarrollo: para explorar soluciones, revisar ideas y aprender tecnologías. Me interesa comprender lo que construyo y comprobar que funciona.</p><a className="text-link" href={CV_URL} download>Descargar mi CV <Download size={18}/></a></div></div><div className="experience-note" data-reveal><span>EXPERIENCIA · DUBLÍN 2021</span><p>Ocho meses en Starbucks del aeropuerto de Dublín: cuatro como barista y cuatro como responsable de equipo. Una experiencia trabajando íntegramente en inglés que me enseñó a comunicarme, coordinarme y responder bajo presión.</p></div></section>
-    <section className="skills" id="tecnologias"><div className="section-head" data-reveal><span className="eyebrow">03 / HERRAMIENTAS Y APRENDIZAJE</span><h2>Mi caja<br/>de herramientas.</h2></div><div className="skill-list">{skillGroups.map(group=><div className="skill-row" key={group.number} data-reveal><span className="skill-number">{group.number}</span><div><h3>{group.title}</h3><p>{group.detail}</p></div><div className="tags">{group.tools.map(tool=><span key={tool}>{tool}</span>)}</div></div>)}</div><div className="learning-grid"><div data-reveal><span className="eyebrow">FORMACIÓN</span><h3>Desarrollo de<br/>Aplicaciones Web</h3><p className="learning-date">2024–2026</p><p>IES Romero Vargas · 2024–2025<br/>ILERNA · 2025–2026</p><p className="status">Formación académica completada · prácticas pendientes</p></div><div data-reveal><span className="eyebrow">APRENDIZAJE CONTINUO</span><h3>La curiosidad<br/>sigue abierta.</h3><p>Cursos de Java y Python · 2022–2024</p><a className="course-link" href="https://www.youtube.com/watch?v=XcUOWCXP5u8" target="_blank" rel="noreferrer">Curso de Codex y agentes de IA <ArrowUpRight size={16}/></a><p className="course-meta">Formación online · Benjamín Cordero</p><div className="languages"><span>IDIOMAS</span><p>Español: nativo · Inglés: B1 certificado</p><p>Experiencia profesional trabajando íntegramente en inglés en Dublín.</p></div></div></div></section>
+    <SkillsSection/>
     <section className="contact" id="contacto"><div className="contact-top" data-reveal><span className="eyebrow">04 / SIGUIENTE PASO</span><span>PRIMER EMPLEO · PRÁCTICAS</span></div><h2 data-reveal>¿Construimos<br/><em>algo juntos?</em></h2><div className="contact-bottom" data-reveal><p>Estoy buscando mi primera oportunidad<br/>en desarrollo de software.<br/><span>Me encantará conocer a tu equipo.</span></p><div className="contact-actions"><a className="pill contact-pill" href={`mailto:${EMAIL}`}><Mail size={21}/> Hablemos <ArrowUpRight size={22}/></a><CopyEmail/></div></div><div className="contact-links"><a href="mailto:radeusto@gmail.com">radeusto@gmail.com</a><a href="https://github.com/faliideusto" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={16}/></a><a href="https://www.linkedin.com/in/rafael-deusto-966447296/" target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={16}/></a><a href={CV_URL} download>Descargar CV <Download size={16}/></a></div></section>
     <footer><a className="brand" href="#inicio" aria-label="Volver al inicio">rd<span>.</span></a><span>© 2026 Rafael Deusto Espinosa</span><a href="#inicio">Volver arriba ↑</a></footer>
   </main>
