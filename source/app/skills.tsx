@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import type { CSSProperties, PointerEvent, ReactNode } from 'react';
-import { ArrowUpRight, Coffee, OpenAiLogo, TestTube } from '@phosphor-icons/react';
+import { Coffee, OpenAiLogo, TestTube } from '@phosphor-icons/react';
 import {
   siApachemaven, siAstro, siClaude, siCss, siDjango, siDocker, siGit, siGithub, siGodotengine,
   siHtml5, siJavascript, siJunit5, siMysql, siNextdotjs, siNodedotjs, siPnpm, siPostgresql, siPython, siReact,
   siRender, siSupabase, siTailwindcss, siTypescript, siVercel, siVite,
 } from 'simple-icons';
 import type { SimpleIcon } from 'simple-icons';
+import { EducationTimeline } from './timeline';
 
 type Category = 'frontend' | 'backend' | 'datos' | 'juegos' | 'calidad' | 'flujo';
 type Tech = {name: string; category: Category; color: string; icon: ReactNode; usedIn: string};
@@ -111,6 +112,6 @@ export function SkillsSection() {
       </div>
       <ul className="tech-grid" key={filter} aria-live="polite">{shown.map((tech, i) => <TechCard tech={tech} index={i} key={tech.name}/>)}</ul>
     </div>
-    <div className="learning-grid"><div data-reveal><span className="eyebrow">FORMACIÓN</span><h3>Desarrollo de<br/>Aplicaciones Web</h3><p className="learning-date">2024–2026</p><p>IES Romero Vargas · 2024–2025<br/>ILERNA · 2025–2026</p><p className="status">Formación académica completada · prácticas pendientes</p></div><div data-reveal><span className="eyebrow">APRENDIZAJE CONTINUO</span><h3>La curiosidad<br/>sigue abierta.</h3><p>Cursos de Java y Python · 2022–2024</p><a className="course-link" href="https://www.youtube.com/watch?v=XcUOWCXP5u8" target="_blank" rel="noreferrer">Curso de Codex y agentes de IA <ArrowUpRight size={16}/></a><p className="course-meta">Formación online · Benjamín Cordero</p><div className="languages"><span>IDIOMAS</span><p>Español: nativo · Inglés: B1 certificado</p><p>Experiencia profesional trabajando íntegramente en inglés en Dublín.</p></div></div></div>
+    <EducationTimeline/>
   </section>;
 }
