@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { ShotReel, type Shot } from './shot-reel';
 import { ArrowDown, ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, X } from '@phosphor-icons/react';
 import { SkillsSection } from './skills';
 import { CursorCircle } from './cursor';
@@ -63,7 +64,7 @@ const projectMap:ProjectSummary[] = [
   ]},
   {id:'maxijuegos',number:'04',name:'MaxiJuegos',works:[
     {area:'realtime',title:'Red con host autoritativo',detail:'Un PC hace de host y simula; los demás envían su entrada. Si alguien se desconecta, un bot ocupa su sitio.'},
-    {area:'ui',title:'24 minijuegos en 2D y 3D',detail:'Cada minijuego es una carpeta independiente que se registra sola: de carreras de parkour a duelos de palabras.'},
+    {area:'ui',title:'25 minijuegos en 2D y 3D',detail:'Cada minijuego es una carpeta independiente que se registra sola: de carreras de karts a duelos de palabras.'},
     {area:'bots',title:'Bots que juegan',detail:'Una IA propia para cada minijuego, que completa la sala y permite jugar en solitario.'},
     {area:'deploy',title:'En tu navegador',detail:'Exportación a WebAssembly con controles táctiles, y tests sin ventana de cada minijuego.'},
   ],also:['quality']},
@@ -95,12 +96,38 @@ function ProjectWork({id}:{id:string}){
 
 function TournamentDiagram(){return <div className="tournament" aria-label="Esquema del flujo de un torneo en PadelBracket"><div className="tournament-top"><span>PADEL<span>BRACKET</span></span><span className="diagram-label">FLUJO DEL TORNEO</span></div><div className="tournament-title">Del primer partido<br/>a la gran final<span>.</span></div><div className="bracket"><div className="round"><span>SEMIFINALES</span><div className="match"><p>Pareja A <b>↗</b></p><p>Pareja B</p></div><div className="match"><p>Pareja C <b>↗</b></p><p>Pareja D</p></div></div><div className="connector" aria-hidden="true"/><div className="round final"><span>FINAL</span><div className="match"><p>Pareja A</p><p>Pareja C</p></div></div></div><div className="diagram-footer"><span>Inscripciones</span><span>Eliminatorias</span><span>Resultados</span></div></div>}
 
+const fitoShots:Shot[] = [
+  {file:'fito-inicio.jpg',title:'Inicio',alt:'Inicio de Escuela Fito Raya: el próximo partido del equipo A contra CD Padel Arcos, con los puntos de cada pareja',width:1440,height:900},
+  {file:'fito-equipo.jpg',title:'El equipo',alt:'Resumen del equipo A: puesto, puntos, balance de victorias y la próxima jornada',width:1440,height:900},
+  {file:'fito-calendario.jpg',title:'Calendario',alt:'Calendario de octubre con las jornadas del equipo y el resultado de cada encuentro',width:1440,height:900},
+  {file:'fito-clasificacion.jpg',title:'Clasificación',alt:'Clasificación de la liga con el equipo A destacado en segunda posición',width:1440,height:900},
+  {file:'fito-encuentro.jpg',title:'Encuentro',alt:'Detalle de un encuentro: resultado 10–2 contra Top Bal Pádel Game B y el acta del partido',width:1440,height:900},
+  {file:'fito-competicion.jpg',title:'Competición',alt:'Explorador de la competición con filtros por zona, fase, categoría, grupo y división',width:1440,height:900},
+  {file:'fito-patrocinadores.jpg',title:'Patrocinadores',alt:'Página de patrocinadores del club con tarjetas para cada empresa',width:1440,height:900},
+];
+
+const tesisShots:Shot[] = [
+  {file:'tesis-inicio.jpg',title:'Inicio',alt:'Portada de Tesis: biblioteca nocturna, cartas de personaje y panel para buscar partida o crear una sala privada',width:1440,height:900},
+  {file:'tesis-personajes.jpg',title:'Elegir personaje',alt:'Selección privada de personaje: siete cartas ilustradas, algunas ya no disponibles',width:1440,height:900},
+  {file:'tesis-mesa.jpg',title:'La mesa',alt:'Mesa de juego con tres investigadores, sus estudios en desarrollo y publicados, y la barra de acciones',width:1440,height:900},
+  {file:'tesis-estudio.jpg',title:'Iniciar estudio',alt:'Diálogo para iniciar un estudio con las cartas de idea de la mano y su coste',width:1440,height:900},
+  {file:'tesis-reglas.jpg',title:'Reglas',alt:'Guía de cómo jugar a Tesis con el objetivo, las fases y los recursos',width:1440,height:900},
+];
+
 const GAME_URL = `${import.meta.env.BASE_URL}maxijuegos/`;
 const gameShots = [
-  {file:'maxijuegos-palabras.jpg',name:'Pelea de Palabras',alt:'Arena 3D con casillas de letras donde los personajes deletrean una palabra'},
-  {file:'maxijuegos-foco.jpg',name:'Caza del Foco',alt:'Tablero oscuro con focos de colores que los jugadores intentan ocupar'},
-  {file:'maxijuegos-dagas.jpg',name:'Tronco de Dagas',alt:'Tronco giratorio con dagas de colores clavadas alrededor'},
+  {file:'maxijuegos-rainbow-kart.jpg',name:'Karts Arcoíris',alt:'Carrera de karts 3D por una pista arcoíris en el espacio'},
+  {file:'maxijuegos-impostor.jpg',name:'Impostor a Bordo',alt:'Nave espacial 3D con tripulantes de colores y la lista de tareas'},
+  {file:'maxijuegos-sniper-town.jpg',name:'Francotiradores',alt:'Mira telescópica sobre un pueblo 3D con el radar en la esquina'},
 ];
+// Poster wall: three rows of minigames drifting in opposite directions behind the play button.
+const posterRows = [
+  ['rainbow_kart','impostor','word_fight','sniper_town','rail_cannons','uphill_rush','pair_escape'],
+  ['knife_log','spotlight','feather_catch','personal_bridge','diligent_shots','ninja_climb','moon_hop','target_range'],
+  ['short_fuse','blind_timer','coin_grab','shrinking_platform','tongue_swing','wave_dash','button_mash'],
+  ['sniper_town','feather_catch','rail_cannons','moon_hop','word_fight','personal_bridge','rainbow_kart','spotlight'],
+];
+const GAME_COUNT = 25;
 
 // Fourth project: the game itself runs inside the card, loaded only when the visitor asks for it.
 function MaxiJuegosProject(){
@@ -119,9 +146,9 @@ function MaxiJuegosProject(){
       <div className="game-bar"><span className={`game-status${playing?' is-live':''}`}><i aria-hidden="true"/>{playing?'EN JUEGO':'DEMO JUGABLE'}</span><span className="game-bar-title">Tú contra 3 bots</span>{playing&&<div className="game-tools"><button type="button" onClick={fullscreen} aria-label="Pantalla completa"><ArrowsOut size={18}/></button><button type="button" onClick={stop} aria-label="Cerrar el juego"><X size={18}/></button></div>}</div>
       <div className="game-stage" ref={stage}>{playing
         ? <iframe ref={frame} src={GAME_URL} title="MaxiJuegos: partida contra bots" allow="fullscreen; gamepad" onLoad={()=>frame.current?.focus()}/>
-        : <button className="game-poster" type="button" onClick={play} aria-label="Jugar a MaxiJuegos contra bots"><img src={`${import.meta.env.BASE_URL}assets/maxijuegos-carrera.jpg`} alt="Carrera de Ruinas: cinco personajes corren por unas ruinas flotantes en 3D" width="1280" height="720" loading="lazy"/><span className="game-play" aria-hidden="true"><Play size={32} weight="fill"/></span><span className="game-cta">Jugar en el navegador<small>Sin instalar nada · descarga de unos 10 MB · sin sonido · también en móvil</small></span></button>}</div>
+        : <button className="game-poster" type="button" onClick={play} aria-label="Jugar a MaxiJuegos contra bots"><span className="poster-wall" aria-hidden="true">{posterRows.map((row,r)=><span className={`poster-row row-${r}`} key={r}>{[...row,...row].map((id,i)=><img key={i} src={`${import.meta.env.BASE_URL}assets/minijuegos/${id}.jpg`} alt="" width="400" height="225" loading="lazy" decoding="async"/>)}</span>)}</span><span className="poster-title" aria-hidden="true"><small>PARTY GAME · {GAME_COUNT} MINIJUEGOS</small>Maxi<b>Juegos</b></span><span className="game-play" aria-hidden="true"><Play size={32} weight="fill"/></span><span className="game-cta">Jugar en el navegador<small>Sin instalar nada · descarga de unos 10 MB · sin sonido · también en móvil</small></span></button>}</div>
       <ul className="game-strip" aria-label="Algunos de los minijuegos">{gameShots.map(shot=><li key={shot.file}><img src={`${import.meta.env.BASE_URL}assets/${shot.file}`} alt={shot.alt} width="640" height="360" loading="lazy"/><span>{shot.name}</span></li>)}</ul>
-      <figcaption><span className="game-keys"><kbd>WASD</kbd> moverte <kbd>Espacio</kbd> o clic, acción</span><span className="game-touch">Se abre a pantalla completa, con joystick y botones táctiles</span><span>24 MINIJUEGOS</span></figcaption>
+      <figcaption><span className="game-keys"><kbd>WASD</kbd> moverte <kbd>Espacio</kbd> o clic, acción</span><span className="game-touch">Se abre a pantalla completa, con joystick y botones táctiles</span><span>{GAME_COUNT} MINIJUEGOS</span></figcaption>
     </figure>
     <ProjectWork id="maxijuegos"/>
   </article>
@@ -225,8 +252,8 @@ export default function Home(){
     <section className="projects" id="proyectos">
       <div className="section-head" data-reveal><div><span className="eyebrow">01 / PROYECTOS SELECCIONADOS</span><p className="section-aside">Cuatro proyectos reales.<br/>La misma forma de aprender: hacer.</p></div><h2>Código que<br/><em>toma forma.</em></h2></div>
       <ProjectMap/>
-      <article className="project" id="fito-raya" data-reveal><div className="project-info"><div className="project-index">01 <span>WEB PARA MI EQUIPO DE PÁDEL</span></div><h3>Escuela Fito Raya</h3><p>La web de los equipos A y B de Escuela Fito Raya, con datos reales de la competición: clasificación, plantillas, jornadas, actas y un laboratorio para preparar las parejas de cada partido.</p><div className="tags">{['TypeScript','Next.js','React','Supabase','GitHub Actions','Vercel'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-primary" href="https://fito-snp.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Escuela Fito Raya">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Equipo-P-del-Fito-Raya" target="_blank" rel="noreferrer" aria-label="Ver el código de Escuela Fito Raya en GitHub"><CodeXml size={18}/> Código</a></div></div><div className="project-gallery"><figure className="tesis-visual"><a className="project-preview" href="https://fito-snp.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Abrir la web de Escuela Fito Raya"><img src={`${import.meta.env.BASE_URL}assets/fito-inicio.jpg`} alt="Web de Escuela Fito Raya: inicio con equipos A y B y próximas jornadas" width="1265" height="1466" loading="lazy"/></a><figcaption><span>El equipo, en un mismo lugar</span><span>TEMPORADA 2026 / 27</span></figcaption></figure></div><ProjectWork id="fito-raya"/></article>
-      <article className="project tesis-project" id="tesis" data-reveal><div className="project-info"><div className="project-index">02 <span>JUEGO ONLINE · HECHO EN SOLITARIO</span></div><h3>Tesis</h3><p>Un juego de cartas online sobre investigación académica para 3–5 personas: cada uno juega desde su dispositivo, con salas privadas, búsqueda de partida y cuentas con progresión. Lo he desarrollado yo solo, del motor a la interfaz.</p><div className="tags">{['Java','JavaScript','Supabase','JUnit','Playwright','Docker'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-primary" href="https://tesis-dm5l.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Tesis">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Ciudadela-Academica" target="_blank" rel="noreferrer" aria-label="Ver el código de Tesis en GitHub"><CodeXml size={18}/> Código</a></div>{demoNote}</div><figure className="tesis-visual"><a className="project-preview" href="https://tesis-dm5l.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir el juego Tesis"><img src={`${import.meta.env.BASE_URL}assets/tesis-actual.jpg`} alt="Captura de una partida de Tesis: mesa de juego, personajes y cartas de investigación" width="1280" height="720" loading="lazy"/></a><figcaption><span>Una partida de Tesis</span><span>EN DESARROLLO</span></figcaption></figure><ProjectWork id="tesis"/></article>
+      <article className="project" id="fito-raya" data-reveal><div className="project-info"><div className="project-index">01 <span>WEB PARA MI EQUIPO DE PÁDEL</span></div><h3>Escuela Fito Raya</h3><p>La web de los equipos A y B de Escuela Fito Raya, con datos reales de la competición: clasificación, plantillas, jornadas, actas y un laboratorio para preparar las parejas de cada partido.</p><div className="tags">{['TypeScript','Next.js','React','Supabase','GitHub Actions','Vercel'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-primary" href="https://fito-snp.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Escuela Fito Raya">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Equipo-P-del-Fito-Raya" target="_blank" rel="noreferrer" aria-label="Ver el código de Escuela Fito Raya en GitHub"><CodeXml size={18}/> Código</a></div></div><ShotReel shots={fitoShots} site="fito-snp.vercel.app" href="https://fito-snp.vercel.app" label="Capturas de Escuela Fito Raya"/><ProjectWork id="fito-raya"/></article>
+      <article className="project tesis-project" id="tesis" data-reveal><div className="project-info"><div className="project-index">02 <span>JUEGO ONLINE · HECHO EN SOLITARIO</span></div><h3>Tesis</h3><p>Un juego de cartas online sobre investigación académica para 3–5 personas: cada uno juega desde su dispositivo, con salas privadas, búsqueda de partida y cuentas con progresión. Lo he desarrollado yo solo, del motor a la interfaz.</p><div className="tags">{['Java','JavaScript','Supabase','JUnit','Playwright','Docker'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-primary" href="https://tesis-dm5l.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Tesis">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Ciudadela-Academica" target="_blank" rel="noreferrer" aria-label="Ver el código de Tesis en GitHub"><CodeXml size={18}/> Código</a></div>{demoNote}</div><ShotReel shots={tesisShots} site="tesis-dm5l.onrender.com" href="https://tesis-dm5l.onrender.com/" label="Capturas de Tesis"/><ProjectWork id="tesis"/></article>
       <article className="project" id="padelbracket" data-reveal><div className="project-info"><div className="project-index">03 <span>PROYECTO FINAL DE DAW</span></div><h3>PadelBracket</h3><p>Una aplicación para organizar torneos de pádel de principio a fin: parejas, inscripciones, cruces y resultados en un mismo lugar.</p><div className="tags">{['Python','Django','MySQL','JavaScript'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-secondary" href="https://github.com/faliideusto/PadelBracket" target="_blank" rel="noreferrer" aria-label="Ver el código de PadelBracket en GitHub"><CodeXml size={18}/> Código</a></div></div><TournamentDiagram/><ProjectWork id="padelbracket"/></article>
       <MaxiJuegosProject/>
     </section>
