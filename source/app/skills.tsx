@@ -15,7 +15,7 @@ type Category = 'frontend' | 'backend' | 'datos' | 'juegos' | 'calidad' | 'flujo
 type Tech = {name: string; category: Category; color: string; icon: ReactNode; usedIn: string};
 
 // Brand marks that are black or near-black would vanish on the dark section, so they use the page foreground.
-function Brand({icon, color}: {icon: SimpleIcon; color?: string}) {
+export function Brand({icon, color}: {icon: SimpleIcon; color?: string}) {
   return <svg viewBox="0 0 24 24" role="img" aria-hidden="true" fill={color ?? `#${icon.hex}`}><path d={icon.path}/></svg>;
 }
 const brand = (icon: SimpleIcon, light = false) => ({color: light ? 'var(--foreground)' : `#${icon.hex}`, icon: <Brand icon={icon} color={light ? 'currentColor' : undefined}/>});
@@ -40,7 +40,7 @@ export const techs: Tech[] = [
   {name:'PostgreSQL', category:'datos', usedIn:'Tesis · Fito Raya', color:'#6b9cf0', icon:<Brand icon={siPostgresql} color="#6b9cf0"/>},
   {name:'MySQL', category:'datos', usedIn:'PadelBracket', color:'#5e9fd6', icon:<Brand icon={siMysql} color="#5e9fd6"/>},
   {name:'Godot', category:'juegos', usedIn:'MaxiJuegos', ...brand(siGodotengine)},
-  {name:'GDScript', category:'juegos', usedIn:'MaxiJuegos · 24 minijuegos', color:'#8fc1e6', icon:<Brand icon={siGodotengine} color="#8fc1e6"/>},
+  {name:'GDScript', category:'juegos', usedIn:'MaxiJuegos · 25 minijuegos', color:'#8fc1e6', icon:<Brand icon={siGodotengine} color="#8fc1e6"/>},
   {name:'JUnit', category:'calidad', usedIn:'Tesis', ...brand(siJunit5)},
   {name:'Playwright', category:'calidad', usedIn:'Tesis · Fito Raya', color:'#2ead33', icon:<TestTube weight="fill"/>},
   {name:'Docker', category:'calidad', usedIn:'Tesis', ...brand(siDocker)},

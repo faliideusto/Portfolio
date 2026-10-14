@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { ShotReel, type Shot } from './shot-reel';
-import { ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, X } from '@phosphor-icons/react';
-import { SkillsSection } from './skills';
+import { ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, ShareNetwork, X } from '@phosphor-icons/react';
+import { Brand, SkillsSection, techs } from './skills';
+import { siApple, siGithubactions, siWebassembly } from 'simple-icons';
 import { CursorCircle } from './cursor';
 import { Hero, TechRibbon } from './hero';
 
@@ -40,36 +42,46 @@ const areas = {
   deploy:{label:'Despliegue',short:'OPS'},
 } as const;
 type Area = keyof typeof areas;
-type Work = {area:Area;title:string;detail:string};
-type ProjectSummary = {id:string;number:string;name:string;works:Work[];also?:Area[]};
+type Use = {tech:string;use:string};
+type ProjectSummary = {id:string;number:string;name:string;areas:Area[];stack:Use[]};
 
+// Each use was checked against the project's repository.
 const projectMap:ProjectSummary[] = [
-  {id:'fito-raya',number:'01',name:'Escuela Fito Raya',works:[
-    {area:'ui',title:'Laboratorio de parejas',detail:'Next.js y React: arrastrar jugadores, intercambios, orden por puntos y diálogo accesible con teclado.'},
-    {area:'integration',title:'Conexión con la federación',detail:'El servidor inicia sesión en las Series Nacionales de Pádel, lee clasificaciones, actas y plantillas y las normaliza con caché.'},
-    {area:'data',title:'Cuentas de jugadores',detail:'Supabase: registro, ficha vinculada a la plantilla y editor de posiciones protegido por contraseña.'},
-    {area:'quality',title:'Tests y CI',detail:'Tests de las reglas de puntuación; lint, tipos, tests y build en GitHub Actions en cada cambio.'},
-  ],also:['server','deploy']},
-  {id:'tesis',number:'02',name:'Tesis',works:[
-    {area:'server',title:'Motor y servidor en Java',detail:'Reglas con los patrones State, Command, Strategy y Observer, y una API HTTP propia con salas, tokens y control de revisiones.'},
-    {area:'realtime',title:'Partidas online',detail:'Salas privadas por código, búsqueda de partida con colas de 3, 4 y 5 jugadores y reconexión al recargar.'},
-    {area:'data',title:'Cuentas y comunidad',detail:'Supabase: perfil con niveles y rangos, amigos, ranking global, misiones y pase de temporada.'},
-    {area:'quality',title:'Pruebas de partidas completas',detail:'JUnit con partidas de 3 a 5 jugadores y QA con Playwright simulando varios navegadores, también en móvil.'},
-  ],also:['ui','bots','deploy']},
-  {id:'padelbracket',number:'03',name:'PadelBracket',works:[
-    {area:'data',title:'Usuarios y roles',detail:'Cuentas de jugador y organizador con permisos distintos, sobre Django y MySQL.'},
-    {area:'server',title:'Lógica del torneo',detail:'Inscripciones de parejas y generación de eliminatorias con avance automático de ganadores.'},
-    {area:'ui',title:'Interfaz web',detail:'Plantillas de Django con JavaScript para seguir el cuadro y los resultados.'},
+  {id:'fito-raya',number:'01',name:'Escuela Fito Raya',areas:['ui','server','data','integration','quality','deploy'],stack:[
+    {tech:'Next.js',use:'La web y su servidor: páginas de cada equipo y rutas API que leen la competición con caché.'},
+    {tech:'React',use:'La interfaz, como el laboratorio para arrastrar jugadores y montar las parejas de cada jornada.'},
+    {tech:'TypeScript',use:'Tipos para los datos de la federación y para las reglas de puntuación de cada encuentro.'},
+    {tech:'Tailwind CSS',use:'Los estilos de toda la web, adaptada a móvil.'},
+    {tech:'Supabase',use:'Cuentas de jugadores, alineaciones guardadas, MVP del mes y la caché compartida entre servidores.'},
+    {tech:'Playwright',use:'Inicia sesión en la web de Series Nacionales de Pádel para leer clasificaciones, actas y plantillas.'},
+    {tech:'Apple Wallet',use:'Un pase con tu convocatoria que se actualiza solo y aparece en la pantalla de bloqueo el día del partido.'},
+    {tech:'GitHub Actions',use:'Lint, tipos, tests y build automáticos en cada cambio.'},
+    {tech:'Vercel',use:'Despliegue de la web.'},
   ]},
-  {id:'maxijuegos',number:'04',name:'MaxiJuegos',works:[
-    {area:'realtime',title:'Red con host autoritativo',detail:'Un PC hace de host y simula; los demás envían su entrada. Si alguien se desconecta, un bot ocupa su sitio.'},
-    {area:'ui',title:'25 minijuegos en 2D y 3D',detail:'Cada minijuego es una carpeta independiente que se registra sola: de carreras de karts a duelos de palabras.'},
-    {area:'bots',title:'Bots que juegan',detail:'Una IA propia para cada minijuego, que completa la sala y permite jugar en solitario.'},
-    {area:'deploy',title:'En tu navegador',detail:'Exportación a WebAssembly con controles táctiles, y tests sin ventana de cada minijuego.'},
-  ],also:['quality']},
+  {id:'tesis',number:'02',name:'Tesis',areas:['ui','server','data','realtime','bots','quality','deploy'],stack:[
+    {tech:'Java',use:'El motor de reglas y un servidor HTTP propio con salas, turnos y los patrones State, Command, Strategy y Observer.'},
+    {tech:'Maven',use:'Compila el proyecto, gestiona las dependencias y lanza los tests.'},
+    {tech:'JavaScript',use:'La interfaz del navegador sin frameworks: mesa, mano privada, diálogos y animaciones.'},
+    {tech:'Supabase',use:'Cuentas opcionales: perfil con niveles, amigos, ranking global y misiones.'},
+    {tech:'JUnit',use:'Tests del motor con partidas completas de 3 a 5 jugadores.'},
+    {tech:'Playwright',use:'QA de la interfaz con varios jugadores en navegadores distintos, también en móvil.'},
+    {tech:'Docker',use:'Imagen del servidor para desplegarlo en Render.'},
+  ]},
+  {id:'padelbracket',number:'03',name:'PadelBracket',areas:['ui','server','data'],stack:[
+    {tech:'Python',use:'La lógica del torneo: inscripciones, cuadro de eliminatorias y avance de los ganadores.'},
+    {tech:'Django',use:'El servidor, las cuentas de jugador y organizador con permisos distintos, y las plantillas de las páginas.'},
+    {tech:'MySQL',use:'Base de datos de usuarios, parejas, torneos y resultados.'},
+    {tech:'JavaScript',use:'Interacción en el navegador para seguir el cuadro y los resultados.'},
+  ]},
+  {id:'maxijuegos',number:'04',name:'MaxiJuegos',areas:['ui','realtime','bots','quality','deploy'],stack:[
+    {tech:'Godot',use:'El motor: escenas 2D y 3D, física e interfaz de los 25 minijuegos.'},
+    {tech:'GDScript',use:'Toda la lógica: cada minijuego en su carpeta, que se registra solo, y una IA propia por minijuego para los bots.'},
+    {tech:'ENet',use:'Red con un PC como host autoritativo. Si alguien se desconecta, un bot ocupa su sitio.'},
+    {tech:'WebAssembly',use:'Exportación para jugar en el navegador, con controles táctiles en móvil.'},
+  ]},
 ];
 const projectById = Object.fromEntries(projectMap.map(p=>[p.id,p]));
-const touches = (p:ProjectSummary)=>new Set<Area>([...p.works.map(w=>w.area),...(p.also??[])]);
+const touches = (p:ProjectSummary)=>new Set<Area>(p.areas);
 
 // Overview: which areas each project works on, so a recruiter can compare them at a glance.
 function ProjectMap(){
@@ -87,10 +99,19 @@ function ProjectMap(){
   </div>
 }
 
-// Card breakdown: the main pieces of work in the project, each tagged with its area.
-function ProjectWork({id}:{id:string}){
+// Icons for the project stacks: the skills section's marks, plus the few tools that only appear here.
+const extraIcons:Record<string,{color:string;icon:ReactNode}> = {
+  'Apple Wallet':{color:'var(--foreground)',icon:<Brand icon={siApple} color="currentColor"/>},
+  'GitHub Actions':{color:'#4d8ef7',icon:<Brand icon={siGithubactions} color="#4d8ef7"/>},
+  'WebAssembly':{color:'#8f7cf7',icon:<Brand icon={siWebassembly} color="#8f7cf7"/>},
+  'ENet':{color:'#83d3c7',icon:<ShareNetwork weight="fill"/>},
+};
+const stackIcon = (name:string)=>extraIcons[name] ?? techs.find(t=>t.name===name) ?? {color:'var(--accent)',icon:null};
+
+// Card breakdown: the technologies the project uses, and what each one is for.
+function ProjectStack({id}:{id:string}){
   const p = projectById[id];
-  return <div className="project-work"><span className="work-label">QUÉ HE HECHO</span><ol>{p.works.map(w=><li key={w.title}><span className={`work-area area-${w.area}`}>{areas[w.area].label}</span><div><b>{w.title}</b><p>{w.detail}</p></div></li>)}</ol></div>
+  return <div className="project-stack"><span className="work-label">TECNOLOGÍAS Y PARA QUÉ LAS HE USADO</span><ul>{p.stack.map(u=>{const t=stackIcon(u.tech);return <li key={u.tech} style={{'--tech':t.color} as CSSProperties}><span className="stack-icon" aria-hidden="true">{t.icon}</span><div><b>{u.tech}</b><p>{u.use}</p></div></li>})}</ul></div>
 }
 
 function TournamentDiagram(){return <div className="tournament" aria-label="Esquema del flujo de un torneo en PadelBracket"><div className="tournament-top"><span>PADEL<span>BRACKET</span></span><span className="diagram-label">FLUJO DEL TORNEO</span></div><div className="tournament-title">Del primer partido<br/>a la gran final<span>.</span></div><div className="bracket"><div className="round"><span>SEMIFINALES</span><div className="match"><p>Pareja A <b>↗</b></p><p>Pareja B</p></div><div className="match"><p>Pareja C <b>↗</b></p><p>Pareja D</p></div></div><div className="connector" aria-hidden="true"/><div className="round final"><span>FINAL</span><div className="match"><p>Pareja A</p><p>Pareja C</p></div></div></div><div className="diagram-footer"><span>Inscripciones</span><span>Eliminatorias</span><span>Resultados</span></div></div>}
@@ -140,7 +161,7 @@ function MaxiJuegosProject(){
   const stop = ()=>{if(document.fullscreenElement)document.exitFullscreen();setPlaying(false)};
   const fullscreen = ()=>{if(document.fullscreenElement)document.exitFullscreen();else stage.current?.requestFullscreen?.().then(()=>frame.current?.focus()).catch(()=>{})};
   return <article className="project game-project" id="maxijuegos" data-reveal>
-    <div className="project-info"><div className="project-index">04 <span>PARTY GAME MULTIJUGADOR</span></div><h3>MaxiJuegos</h3><p>Un party game de minijuegos para 2–8 jugadores hecho en Godot, con partidas online de un jugador por PC. La versión de esta página corre en tu navegador contra 3 bots.</p><div className="tags">{['Godot 4','GDScript','Multijugador','WebAssembly'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><button className="btn btn-primary" type="button" onClick={play} aria-label="Jugar a MaxiJuegos contra bots en esta página"><Play size={18} weight="fill"/> Jugar ahora</button><a className="btn btn-secondary" href={GAME_URL} target="_blank" rel="noopener noreferrer" aria-label="Abrir MaxiJuegos en una pestaña nueva">Pantalla completa <ArrowUpRight size={18}/></a></div></div>
+    <div className="project-info"><div className="project-index">04 <span>PARTY GAME MULTIJUGADOR</span></div><h3>MaxiJuegos</h3><p>Un party game de minijuegos para 2–8 jugadores hecho en Godot, con partidas online de un jugador por PC. La versión de esta página corre en tu navegador contra 3 bots.</p><div className="project-actions"><button className="btn btn-primary" type="button" onClick={play} aria-label="Jugar a MaxiJuegos contra bots en esta página"><Play size={18} weight="fill"/> Jugar ahora</button><a className="btn btn-secondary" href={GAME_URL} target="_blank" rel="noopener noreferrer" aria-label="Abrir MaxiJuegos en una pestaña nueva">Pantalla completa <ArrowUpRight size={18}/></a></div></div>
     <figure className="game-visual">
       <div className="game-bar"><span className={`game-status${playing?' is-live':''}`}><i aria-hidden="true"/>{playing?'EN JUEGO':'DEMO JUGABLE'}</span><span className="game-bar-title">Tú contra 3 bots</span>{playing&&<div className="game-tools"><button type="button" onClick={fullscreen} aria-label="Pantalla completa"><ArrowsOut size={18}/></button><button type="button" onClick={stop} aria-label="Cerrar el juego"><X size={18}/></button></div>}</div>
       <div className="game-stage" ref={stage}>{playing
@@ -149,7 +170,7 @@ function MaxiJuegosProject(){
       <ul className="game-strip" aria-label="Algunos de los minijuegos">{gameShots.map(shot=><li key={shot.file}><img src={`${import.meta.env.BASE_URL}assets/${shot.file}`} alt={shot.alt} width="640" height="360" loading="lazy"/><span>{shot.name}</span></li>)}</ul>
       <figcaption><span className="game-keys"><kbd>WASD</kbd> moverte <kbd>Espacio</kbd> o clic, acción</span><span className="game-touch">Se abre a pantalla completa, con joystick y botones táctiles</span><span>{GAME_COUNT} MINIJUEGOS</span></figcaption>
     </figure>
-    <ProjectWork id="maxijuegos"/>
+    <ProjectStack id="maxijuegos"/>
   </article>
 }
 
@@ -242,9 +263,9 @@ export default function Home(){
     <section className="projects" id="proyectos">
       <div className="section-head" data-reveal><div><span className="eyebrow">01 / PROYECTOS SELECCIONADOS</span><p className="section-aside">Cuatro proyectos reales.<br/>La misma forma de aprender: hacer.</p></div><h2>Código que<br/><em>toma forma.</em></h2></div>
       <ProjectMap/>
-      <article className="project" id="fito-raya" data-reveal><div className="project-info"><div className="project-index">01 <span>WEB PARA MI EQUIPO DE PÁDEL</span></div><h3>Escuela Fito Raya</h3><p>La web de los equipos A y B de Escuela Fito Raya, con datos reales de la competición: clasificación, plantillas, jornadas, actas y un laboratorio para preparar las parejas de cada partido.</p><div className="tags">{['TypeScript','Next.js','React','Supabase','GitHub Actions','Vercel'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-primary" href="https://fito-snp.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Escuela Fito Raya">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Equipo-P-del-Fito-Raya" target="_blank" rel="noreferrer" aria-label="Ver el código de Escuela Fito Raya en GitHub"><CodeXml size={18}/> Código</a></div></div><ShotReel shots={fitoShots} site="fito-snp.vercel.app" href="https://fito-snp.vercel.app" label="Capturas de Escuela Fito Raya"/><ProjectWork id="fito-raya"/></article>
-      <article className="project tesis-project" id="tesis" data-reveal><div className="project-info"><div className="project-index">02 <span>JUEGO ONLINE · HECHO EN SOLITARIO</span></div><h3>Tesis</h3><p>Un juego de cartas online sobre investigación académica para 3–5 personas: cada uno juega desde su dispositivo, con salas privadas, búsqueda de partida y cuentas con progresión. Lo he desarrollado yo solo, del motor a la interfaz.</p><div className="tags">{['Java','JavaScript','Supabase','JUnit','Playwright','Docker'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-primary" href="https://tesis-dm5l.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Tesis">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Ciudadela-Academica" target="_blank" rel="noreferrer" aria-label="Ver el código de Tesis en GitHub"><CodeXml size={18}/> Código</a></div>{demoNote}</div><ShotReel shots={tesisShots} site="tesis-dm5l.onrender.com" href="https://tesis-dm5l.onrender.com/" label="Capturas de Tesis"/><ProjectWork id="tesis"/></article>
-      <article className="project" id="padelbracket" data-reveal><div className="project-info"><div className="project-index">03 <span>PROYECTO FINAL DE DAW</span></div><h3>PadelBracket</h3><p>Una aplicación para organizar torneos de pádel de principio a fin: parejas, inscripciones, cruces y resultados en un mismo lugar.</p><div className="tags">{['Python','Django','MySQL','JavaScript'].map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><a className="btn btn-secondary" href="https://github.com/faliideusto/PadelBracket" target="_blank" rel="noreferrer" aria-label="Ver el código de PadelBracket en GitHub"><CodeXml size={18}/> Código</a></div></div><TournamentDiagram/><ProjectWork id="padelbracket"/></article>
+      <article className="project" id="fito-raya" data-reveal><div className="project-info"><div className="project-index">01 <span>WEB PARA MI EQUIPO DE PÁDEL</span></div><h3>Escuela Fito Raya</h3><p>La web de los equipos A y B de Escuela Fito Raya, con datos reales de la competición: clasificación, plantillas, jornadas, actas y un laboratorio para preparar las parejas de cada partido.</p><div className="project-actions"><a className="btn btn-primary" href="https://fito-snp.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Escuela Fito Raya">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Equipo-P-del-Fito-Raya" target="_blank" rel="noreferrer" aria-label="Ver el código de Escuela Fito Raya en GitHub"><CodeXml size={18}/> Código</a></div></div><ShotReel shots={fitoShots} site="fito-snp.vercel.app" href="https://fito-snp.vercel.app" label="Capturas de Escuela Fito Raya"/><ProjectStack id="fito-raya"/></article>
+      <article className="project tesis-project" id="tesis" data-reveal><div className="project-info"><div className="project-index">02 <span>PROYECTO UNIVERSITARIO</span></div><h3>Tesis</h3><p>Un juego de cartas online sobre investigación académica, hecho como proyecto universitario para un profesor de la universidad. Es para 3–5 personas: cada uno juega desde su dispositivo, con salas privadas, búsqueda de partida y cuentas con progresión.</p><div className="project-actions"><a className="btn btn-primary" href="https://tesis-dm5l.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Tesis">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Ciudadela-Academica" target="_blank" rel="noreferrer" aria-label="Ver el código de Tesis en GitHub"><CodeXml size={18}/> Código</a></div>{demoNote}</div><ShotReel shots={tesisShots} site="tesis-dm5l.onrender.com" href="https://tesis-dm5l.onrender.com/" label="Capturas de Tesis"/><ProjectStack id="tesis"/></article>
+      <article className="project" id="padelbracket" data-reveal><div className="project-info"><div className="project-index">03 <span>PROYECTO FINAL DE DAW</span></div><h3>PadelBracket</h3><p>Una aplicación para organizar torneos de pádel de principio a fin: parejas, inscripciones, cruces y resultados en un mismo lugar.</p><div className="project-actions"><a className="btn btn-secondary" href="https://github.com/faliideusto/PadelBracket" target="_blank" rel="noreferrer" aria-label="Ver el código de PadelBracket en GitHub"><CodeXml size={18}/> Código</a></div></div><TournamentDiagram/><ProjectStack id="padelbracket"/></article>
       <MaxiJuegosProject/>
     </section>
     <section className="tagline" aria-label="Lo que me mueve"><div className="tagline-sticky"><p>{tagline.split(' ').map((w,i)=><span className="word" key={i}>{w} </span>)}</p></div></section>
