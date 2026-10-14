@@ -11,7 +11,7 @@ const stats = [
   {value:4, label:'proyectos reales', href:'#proyectos'},
   {value:3, label:'demos en vivo', href:'#proyectos'},
   {value:techs.length, label:'tecnologías en uso', href:'#tecnologias'},
-  {value:24, label:'minijuegos en MaxiJuegos', href:'#maxijuegos'},
+  {value:25, label:'minijuegos en MaxiJuegos', href:'#maxijuegos'},
 ];
 
 // Numbers count up once the hero has finished assembling.

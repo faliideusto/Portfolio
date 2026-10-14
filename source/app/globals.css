@@ -454,3 +454,65 @@ body.menu-open{overflow:hidden}
 .tech-ribbon .tech-set{flex-wrap:wrap}
 .tech-ribbon .tech-set+.tech-set{display:none}
 }
+
+/* Screenshot reel: browser frame that plays each project's captures like stories. */
+.reel{margin:0;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.reel-bar{display:flex;align-items:center;gap:12px;height:44px;padding:0 8px 0 14px;border-bottom:1px solid var(--border)}
+.reel-dots{display:flex;gap:6px}
+.reel-dots i{width:9px;height:9px;border-radius:50%;background:#3a4142}
+.project a.reel-url{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;margin:0;height:28px;padding:0 12px;border-radius:99px;background:var(--background);font-size:12px;color:var(--muted)}
+.reel-url span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.project a.reel-url:hover{color:var(--accent)}
+.reel-count{font-size:11px;letter-spacing:1px;color:var(--muted);font-variant-numeric:tabular-nums}
+.reel-pause{display:grid;place-items:center;width:30px;height:30px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.reel-pause:hover{background:var(--surface-2);color:var(--foreground)}
+.reel-stage{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0b0d0e;touch-action:pan-y}
+.project .reel-stage img{position:absolute;inset:0;width:100%;height:100%;border-radius:0;object-fit:cover;object-position:50% 0;opacity:0;transform:scale(1.02);transition:opacity .9s var(--ease),transform 1.2s var(--ease)}
+.project .reel-stage img.is-active{opacity:1;transform:scale(1)}
+.reel.is-running .reel-stage img.is-tall.is-active{animation:reel-browse 5.2s cubic-bezier(.45,0,.25,1) .6s both}
+.reel.is-running .reel-stage img.is-wide.is-active{animation:reel-drift 5.2s linear both}
+@keyframes reel-browse{0%,8%{object-position:50% 0}92%,100%{object-position:50% 100%}}
+@keyframes reel-drift{from{transform:scale(1)}to{transform:scale(1.06)}}
+.reel-nav{position:absolute;top:50%;z-index:1;display:grid;place-items:center;width:40px;height:40px;margin-top:-20px;padding:0;border:1px solid #ffffff2e;border-radius:50%;background:#101314b3;color:#fff;cursor:pointer;opacity:0;backdrop-filter:blur(6px);transition:opacity .3s,background .3s}
+.reel-nav.prev{left:12px}.reel-nav.next{right:12px}
+.reel:hover .reel-nav,.reel-nav:focus-visible{opacity:1}
+.reel-nav:hover{background:var(--accent);color:var(--primary-foreground)}
+.reel-tabs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;margin:0;padding:10px;list-style:none;border-top:1px solid var(--border)}
+.reel-tabs button{position:relative;display:flex;flex-direction:column;gap:8px;width:100%;padding:0 0 10px;border:0;background:none;color:var(--muted);font:inherit;text-align:left;cursor:pointer}
+.reel-thumb{display:block;overflow:hidden;border-radius:6px;aspect-ratio:16/10;outline:1px solid transparent;opacity:.55;transition:opacity .3s,outline-color .3s}
+.project .reel-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;border-radius:0}
+.reel-tabs button:hover .reel-thumb{opacity:.85}
+.reel-tabs button.is-active .reel-thumb{opacity:1;outline-color:var(--accent)}
+.reel-title{font-size:12px;line-height:1.3;font-weight:600}
+.reel-tabs button.is-active .reel-title{color:var(--foreground)}
+.reel-progress{position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:#2c3233;overflow:hidden}
+.reel-progress i{display:block;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.reel-tabs button.is-active .reel-progress i{animation:reel-progress linear forwards;animation-play-state:paused}
+.reel.is-running .reel-tabs button.is-active .reel-progress i{animation-play-state:running}
+@keyframes reel-progress{to{transform:scaleX(1)}}
+@media(max-width:760px){
+  .reel-tabs{grid-auto-flow:row;grid-template-columns:repeat(auto-fit,minmax(0,1fr));display:flex;gap:4px;padding:10px 12px 12px}
+  .reel-tabs li{flex:1}
+  .reel-thumb,.reel-title{display:none}
+  .reel-tabs button{padding:8px 0}
+  .reel-progress{top:50%;bottom:auto;height:3px;margin-top:-1px}
+  .reel-count{display:none}
+  .reel-nav{opacity:1;width:34px;height:34px;margin-top:-17px}
+}
+@media(prefers-reduced-motion:reduce){.project .reel-stage img{transition:none;transform:none}}
+/* MaxiJuegos poster: a tilted wall of minigames drifting behind the play button. */
+.poster-wall{position:absolute;inset:-30% -20%;display:flex;flex-direction:column;justify-content:center;gap:10px;transform:rotate(-8deg);background:#120f2a}
+.poster-row{display:flex;gap:10px;width:max-content;animation:poster-left 70s linear infinite}
+.poster-row.row-1{animation-name:poster-right;animation-duration:80s}
+.poster-row.row-2{animation-duration:90s}
+.poster-row.row-3{animation-name:poster-right;animation-duration:75s}
+.project .poster-row img{flex:none;width:clamp(120px,14vw,200px);height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:8px;transition:none}
+@keyframes poster-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes poster-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.game-poster:hover .poster-row{animation-play-state:paused}
+.game-poster::after{background:radial-gradient(ellipse at center,#00000026 0%,#00000080 75%),linear-gradient(180deg,#00000040 0%,#00000000 40%,#000000d9 100%)}
+.poster-title{position:absolute;z-index:1;left:24px;top:20px;display:flex;flex-direction:column;gap:2px;font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.05em;line-height:1;color:#fff}
+.poster-title b{color:var(--accent);font-weight:700}
+.poster-title small{font-size:11px;font-weight:600;letter-spacing:1.6px;color:#ffffffb3}
+@media(prefers-reduced-motion:reduce){.poster-row{animation:none}}
+.game-poster:hover .poster-row img{transform:none}
