@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 import { ShotReel, type Shot } from './shot-reel';
-import { ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Play, ShareNetwork, X } from '@phosphor-icons/react';
+import { ArrowsOut, ArrowUpRight, Check, Code as CodeXml, Copy, DownloadSimple as Download, EnvelopeSimple as Mail, Microphone, Play, ShareNetwork, TestTube, X } from '@phosphor-icons/react';
 import { Brand, SkillsSection, techs } from './skills';
-import { siApple, siGithubactions, siWebassembly } from 'simple-icons';
+import { siApple, siGithubactions, siGooglecalendar, siWebassembly } from 'simple-icons';
 import { CursorCircle } from './cursor';
 import { Hero, TechRibbon } from './hero';
 
@@ -79,6 +79,16 @@ const projectMap:ProjectSummary[] = [
     {tech:'ENet',use:'Red con un PC como host autoritativo. Si alguien se desconecta, un bot ocupa su sitio.'},
     {tech:'WebAssembly',use:'Exportación para jugar en el navegador, con controles táctiles en móvil.'},
   ]},
+  {id:'receptia',number:'05',name:'Receptia',areas:['ui','server','data','bots','integration','quality'],stack:[
+    {tech:'Node.js',use:'Un servidor HTTP propio, sin frameworks: recibe los avisos de Meta, comprueba su firma y junta los mensajes seguidos de un cliente antes de contestar.'},
+    {tech:'Claude API',use:'La recepcionista: con herramientas para ver huecos, reservar, cambiar o cancelar citas y avisar al dueño cuando hace falta una persona.'},
+    {tech:'WhatsApp API',use:'La API oficial de Meta para contestar, recordatorios con plantillas aprobadas y el alta del número de cada negocio sin dejar su app. También lee los mensajes de Instagram.'},
+    {tech:'Whisper',use:'Pasa a texto los audios que mandan los clientes, en menos de un segundo con Groq.'},
+    {tech:'Google Calendar',use:'La agenda del negocio: las citas salen en el móvil del dueño y lo que apunta a mano cuenta como ocupado.'},
+    {tech:'JavaScript',use:'El cálculo de huecos libres según horario, duración del servicio y citas ya dadas, y la demo guiada de la web.'},
+    {tech:'node:test',use:'Tests de huecos, reservas, recordatorios, firma de los avisos y una conversación completa, sin gastar saldo de la API.'},
+    {tech:'HTML',use:'La web receptiaa.com en un solo archivo: demo en vivo, calculadora de clientes perdidos y planes.'},
+  ]},
 ];
 const projectById = Object.fromEntries(projectMap.map(p=>[p.id,p]));
 const touches = (p:ProjectSummary)=>new Set<Area>(p.areas);
@@ -105,6 +115,9 @@ const extraIcons:Record<string,{color:string;icon:ReactNode}> = {
   'GitHub Actions':{color:'#4d8ef7',icon:<Brand icon={siGithubactions} color="#4d8ef7"/>},
   'WebAssembly':{color:'#8f7cf7',icon:<Brand icon={siWebassembly} color="#8f7cf7"/>},
   'ENet':{color:'#83d3c7',icon:<ShareNetwork weight="fill"/>},
+  'Whisper':{color:'#f55036',icon:<Microphone weight="fill"/>},
+  'Google Calendar':{color:'#4285f4',icon:<Brand icon={siGooglecalendar} color="#4285f4"/>},
+  'node:test':{color:'#5fa04e',icon:<TestTube weight="fill"/>},
 };
 const stackIcon = (name:string)=>extraIcons[name] ?? techs.find(t=>t.name===name) ?? {color:'var(--accent)',icon:null};
 
@@ -132,6 +145,17 @@ const tesisShots:Shot[] = [
   {file:'tesis-mesa.jpg',title:'La mesa',alt:'Mesa de juego con tres investigadores, sus estudios en desarrollo y publicados, y la barra de acciones',width:1440,height:900},
   {file:'tesis-estudio.jpg',title:'Iniciar estudio',alt:'Diálogo para iniciar un estudio con las cartas de idea de la mano y su coste',width:1440,height:900},
   {file:'tesis-reglas.jpg',title:'Reglas',alt:'Guía de cómo jugar a Tesis con el objetivo, las fases y los recursos',width:1440,height:900},
+];
+
+const receptiaShots:Shot[] = [
+  {file:'receptia-inicio.jpg',title:'Inicio',alt:'Portada de Receptia: contesta cada WhatsApp y cada llamada, con un móvil que reserva una cita a partir de un audio',width:1440,height:900},
+  {file:'receptia-whatsapp.jpg',title:'WhatsApp',alt:'Demo en vivo: un cliente manda un audio a Fisio Ribera y Receptia le ofrece huecos reales y reserva la cita',width:1440,height:900},
+  {file:'receptia-llamadas.jpg',title:'Llamadas',alt:'Demo en vivo: Receptia coge una llamada a Taberna La Bodega y hace la reserva hablando',width:1440,height:900},
+  {file:'receptia-avisos.jpg',title:'Recordatorios',alt:'Demo en vivo: pantalla de bloqueo con el recordatorio de la cita del día siguiente y su confirmación con un toque',width:1440,height:900},
+  {file:'receptia-agenda.jpg',title:'Agenda',alt:'Demo en vivo: la agenda del día y la lista de espera que rellena un hueco cuando alguien cancela',width:1440,height:900},
+  {file:'receptia-funciones.jpg',title:'Qué hace',alt:'Funciones de Receptia: mensajes y audios por WhatsApp, y llamadas con voz natural',width:1440,height:900},
+  {file:'receptia-calculadora.jpg',title:'Calculadora',alt:'Calculadora de cuánto dinero pierde un negocio por los clientes que no reciben respuesta',width:1440,height:900},
+  {file:'receptia-planes.jpg',title:'Planes',alt:'Planes Básico, Completo y Pro de Receptia con cuota mensual y sin permanencia',width:1440,height:900},
 ];
 
 const GAME_URL = `${import.meta.env.BASE_URL}maxijuegos/`;
@@ -261,12 +285,13 @@ export default function Home(){
     <Hero cvUrl={CV_URL}/>
     <TechRibbon/>
     <section className="projects" id="proyectos">
-      <div className="section-head" data-reveal><div><span className="eyebrow">01 / PROYECTOS SELECCIONADOS</span><p className="section-aside">Cuatro proyectos reales.<br/>La misma forma de aprender: hacer.</p></div><h2>Código que<br/><em>toma forma.</em></h2></div>
+      <div className="section-head" data-reveal><div><span className="eyebrow">01 / PROYECTOS SELECCIONADOS</span><p className="section-aside">Cinco proyectos reales.<br/>La misma forma de aprender: hacer.</p></div><h2>Código que<br/><em>toma forma.</em></h2></div>
       <ProjectMap/>
       <article className="project" id="fito-raya" data-reveal><div className="project-info"><div className="project-index">01 <span>WEB PARA MI EQUIPO DE PÁDEL</span></div><h3>Escuela Fito Raya</h3><p>La web de los equipos A y B de Escuela Fito Raya, con datos reales de la competición: clasificación, plantillas, jornadas, actas y un laboratorio para preparar las parejas de cada partido.</p><div className="project-actions"><a className="btn btn-primary" href="https://fito-snp.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Escuela Fito Raya">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Equipo-P-del-Fito-Raya" target="_blank" rel="noreferrer" aria-label="Ver el código de Escuela Fito Raya en GitHub"><CodeXml size={18}/> Código</a></div></div><ShotReel shots={fitoShots} site="fito-snp.vercel.app" href="https://fito-snp.vercel.app" label="Capturas de Escuela Fito Raya"/><ProjectStack id="fito-raya"/></article>
       <article className="project tesis-project" id="tesis" data-reveal><div className="project-info"><div className="project-index">02 <span>PROYECTO UNIVERSITARIO</span></div><h3>Tesis</h3><p>Un juego de cartas online sobre investigación académica, hecho como proyecto universitario para un profesor de la universidad. Es para 3–5 personas: cada uno juega desde su dispositivo, con salas privadas, búsqueda de partida y cuentas con progresión.</p><div className="project-actions"><a className="btn btn-primary" href="https://tesis-dm5l.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Ver la demo de Tesis">Ver demo <ArrowUpRight size={18}/></a><a className="btn btn-secondary" href="https://github.com/faliideusto/Ciudadela-Academica" target="_blank" rel="noreferrer" aria-label="Ver el código de Tesis en GitHub"><CodeXml size={18}/> Código</a></div>{demoNote}</div><ShotReel shots={tesisShots} site="tesis-dm5l.onrender.com" href="https://tesis-dm5l.onrender.com/" label="Capturas de Tesis"/><ProjectStack id="tesis"/></article>
       <article className="project" id="padelbracket" data-reveal><div className="project-info"><div className="project-index">03 <span>PROYECTO FINAL DE DAW</span></div><h3>PadelBracket</h3><p>Una aplicación para organizar torneos de pádel de principio a fin: parejas, inscripciones, cruces y resultados en un mismo lugar.</p><div className="project-actions"><a className="btn btn-secondary" href="https://github.com/faliideusto/PadelBracket" target="_blank" rel="noreferrer" aria-label="Ver el código de PadelBracket en GitHub"><CodeXml size={18}/> Código</a></div></div><TournamentDiagram/><ProjectStack id="padelbracket"/></article>
       <MaxiJuegosProject/>
+      <article className="project" id="receptia" data-reveal><div className="project-info"><div className="project-index">05 <span>PROYECTO PROPIO CON IA</span></div><h3>Receptia</h3><p>Una recepcionista con IA para clínicas, bares y peluquerías. Contesta por WhatsApp a mensajes y audios, mira los huecos libres, da, cambia y cancela citas, manda recordatorios el día antes y avisa al dueño cuando hace falta una persona.</p><div className="project-actions"><a className="btn btn-primary" href="https://receptiaa.com" target="_blank" rel="noopener noreferrer" aria-label="Ver la web de Receptia con su demo en vivo">Ver demo <ArrowUpRight size={18}/></a></div></div><ShotReel shots={receptiaShots} site="receptiaa.com" href="https://receptiaa.com" label="Capturas de Receptia"/><ProjectStack id="receptia"/></article>
     </section>
     <section className="tagline" aria-label="Lo que me mueve"><div className="tagline-sticky"><p>{tagline.split(' ').map((w,i)=><span className="word" key={i}>{w} </span>)}</p></div></section>
     <section className="about" id="sobre-mi"><div className="about-head" data-reveal><span className="eyebrow">02 / UN POCO SOBRE MÍ</span><span className="asterisk" aria-hidden="true">✳</span></div><h2 data-reveal>Aprender haciendo.<br/><em>Crecer en equipo.</em></h2><div className="about-body" data-reveal><span className="about-label">MÁS ALLÁ DEL CÓDIGO</span><div><p>Soy Rafael, desarrollador junior de Jerez. Me gusta entender cómo funcionan las cosas y convertir ese aprendizaje en aplicaciones que se puedan usar.</p><p>He completado la formación académica de Desarrollo de Aplicaciones Web y estoy pendiente de las prácticas. Busco un equipo donde aportar, recibir feedback y seguir aprendiendo con proyectos reales.</p><p>Uso la IA como apoyo durante el desarrollo: para explorar soluciones, revisar ideas y aprender tecnologías. Me interesa comprender lo que construyo y comprobar que funciona.</p><a className="text-link" href={CV_URL} download>Descargar mi CV <Download size={18}/></a></div></div><div className="experience-note" data-reveal><span>EXPERIENCIA · DUBLÍN 2021</span><p>Ocho meses en Starbucks del aeropuerto de Dublín: cuatro como barista y cuatro como responsable de equipo. Una experiencia trabajando íntegramente en inglés que me enseñó a comunicarme, coordinarme y responder bajo presión.</p></div></section>
