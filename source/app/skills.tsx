@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { CSSProperties, PointerEvent, ReactNode } from 'react';
 import { Coffee, OpenAiLogo, TestTube } from '@phosphor-icons/react';
 import {
-  siApachemaven, siAstro, siClaude, siCss, siDjango, siDocker, siGit, siGithub, siGodotengine,
+  siApachemaven, siAstro, siClaude, siWhatsapp, siCss, siDjango, siDocker, siGit, siGithub, siGodotengine,
   siHtml5, siJavascript, siJunit5, siMysql, siNextdotjs, siNodedotjs, siPnpm, siPostgresql, siPython, siReact,
   siRender, siSupabase, siTailwindcss, siTypescript, siVercel, siVite,
 } from 'simple-icons';
@@ -24,7 +24,7 @@ const brand = (icon: SimpleIcon, light = false) => ({color: light ? 'var(--foreg
 export const techs: Tech[] = [
   {name:'React', category:'frontend', usedIn:'Fito Raya · Portfolio', ...brand(siReact)},
   {name:'TypeScript', category:'frontend', usedIn:'Fito Raya · Aerointer · Portfolio', ...brand(siTypescript)},
-  {name:'JavaScript', category:'frontend', usedIn:'Tesis · PadelBracket', ...brand(siJavascript)},
+  {name:'JavaScript', category:'frontend', usedIn:'Tesis · PadelBracket · Receptia', ...brand(siJavascript)},
   {name:'Next.js', category:'frontend', usedIn:'Fito Raya', ...brand(siNextdotjs, true)},
   {name:'Astro', category:'frontend', usedIn:'Aerointer', ...brand(siAstro)},
   {name:'Vite', category:'frontend', usedIn:'Portfolio', ...brand(siVite)},
@@ -34,8 +34,10 @@ export const techs: Tech[] = [
   {name:'Java', category:'backend', usedIn:'Tesis', color:'#f89820', icon:<Coffee weight="fill"/>},
   {name:'Python', category:'backend', usedIn:'PadelBracket', ...brand(siPython)},
   {name:'Django', category:'backend', usedIn:'PadelBracket', color:'#44b78b', icon:<Brand icon={siDjango} color="#44b78b"/>},
-  {name:'Node.js', category:'backend', usedIn:'Fito Raya', ...brand(siNodedotjs)},
+  {name:'Node.js', category:'backend', usedIn:'Fito Raya · Receptia', ...brand(siNodedotjs)},
   {name:'Maven', category:'backend', usedIn:'Tesis', ...brand(siApachemaven)},
+  {name:'Claude API', category:'backend', usedIn:'Receptia', ...brand(siClaude)},
+  {name:'WhatsApp API', category:'backend', usedIn:'Receptia', ...brand(siWhatsapp)},
   {name:'Supabase', category:'datos', usedIn:'Tesis · Fito Raya', ...brand(siSupabase)},
   {name:'PostgreSQL', category:'datos', usedIn:'Tesis · Fito Raya', color:'#6b9cf0', icon:<Brand icon={siPostgresql} color="#6b9cf0"/>},
   {name:'MySQL', category:'datos', usedIn:'PadelBracket', color:'#5e9fd6', icon:<Brand icon={siMysql} color="#5e9fd6"/>},

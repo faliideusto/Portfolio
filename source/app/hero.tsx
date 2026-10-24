@@ -8,8 +8,8 @@ import { techs } from './skills';
 function SplitName({text}:{text:string}){return <>{[...text].map((ch,i)=><span className="char" style={{'--i':i} as CSSProperties} key={i}>{ch}</span>)}</>}
 
 const stats = [
-  {value:4, label:'proyectos reales', href:'#proyectos'},
-  {value:3, label:'demos en vivo', href:'#proyectos'},
+  {value:5, label:'proyectos reales', href:'#proyectos'},
+  {value:4, label:'demos en vivo', href:'#proyectos'},
   {value:techs.length, label:'tecnologías en uso', href:'#tecnologias'},
   {value:25, label:'minijuegos en MaxiJuegos', href:'#maxijuegos'},
 ];
@@ -46,7 +46,7 @@ export function Hero({cvUrl}:{cvUrl:string}){
         <div className="hero-top"><span className="availability"><i aria-hidden="true"/>Disponible para prácticas y primer empleo</span><span className="hero-place">Jerez, España</span></div>
         <h1 className="hero-name" aria-label="Rafael Deusto"><span className="name-line" aria-hidden="true"><SplitName text="RAFAEL"/></span><span className="name-line" aria-hidden="true"><SplitName text="DEUSTO"/></span></h1>
         <p className="hero-lead"><b>Desarrollador web junior.</b> Construyo aplicaciones completas, del servidor a la interfaz.</p>
-        <p className="hero-copy">Un juego online con motor en Java, la web de mi equipo de pádel en Next.js, torneos en Django y un party game en Godot que puedes jugar aquí. Acabo de terminar DAW y busco mi primer equipo.</p>
+        <p className="hero-copy">Una recepcionista con IA para WhatsApp, un juego online con motor en Java, la web de mi equipo de pádel en Next.js, torneos en Django y un party game en Godot que puedes jugar aquí. Acabo de terminar DAW y busco mi primer equipo.</p>
         <div className="hero-actions">
           <a className="pill light" href={cvUrl} download>Descargar CV <Download size={18}/></a>
           <a className="pill ghost" href="#proyectos">Ver proyectos <ArrowDown size={18}/></a>
@@ -58,7 +58,7 @@ export function Hero({cvUrl}:{cvUrl:string}){
       </div>
       <figure className="hero-photo">
         <div className="hero-photo-frame"><img src={`${import.meta.env.BASE_URL}img/fotoperfil.jpg`} alt="Rafael Deusto Espinosa" width="1080" height="1346" fetchPriority="high"/></div>
-        <figcaption className="hero-now"><i aria-hidden="true"/><span><small>AHORA MISMO</small>Tesis, un juego de cartas online en Java</span></figcaption>
+        <figcaption className="hero-now"><i aria-hidden="true"/><span><small>AHORA MISMO</small>Receptia, una recepcionista con IA para WhatsApp</span></figcaption>
         <span className="hero-badge" aria-hidden="true"><svg viewBox="0 0 100 100"><path id="hero-badge-path" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" fill="none"/><text><textPath href="#hero-badge-path" textLength="230" lengthAdjust="spacing">DESARROLLADOR WEB · JUNIOR · </textPath></text></svg><b>✳</b></span>
       </figure>
     </div>
