@@ -519,3 +519,18 @@ body.menu-open{overflow:hidden}
 .poster-title small{font-size:11px;font-weight:600;letter-spacing:1.6px;color:#ffffffb3}
 @media(prefers-reduced-motion:reduce){.poster-row{animation:none}}
 .game-poster:hover .poster-row img{transform:none}
+
+/* iPhone memory: Safari reloads the tab ("ha generado problemas repetidamente") when the page uses too much memory.
+   Blur filters on large blocks and endless animations off screen were the heaviest part on phones. */
+.is-offscreen,.is-offscreen *{animation-play-state:paused!important}
+.game-stage.is-offscreen .poster-wall{visibility:hidden}
+.menu-overlay{-webkit-backdrop-filter:none;backdrop-filter:none}
+@media(max-width:1099px),(hover:none){
+.motion [data-reveal]{filter:none;transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.hero-name{filter:none}
+@keyframes char-in{from{opacity:0;transform:translateY(64px) rotate(6deg)}to{opacity:1;transform:none}}
+@keyframes fade-up{from{opacity:0;transform:translateY(64px)}to{opacity:1;transform:none}}
+.tech-ribbon{-webkit-mask-image:none;mask-image:none}
+.hero-now{-webkit-backdrop-filter:none;backdrop-filter:none;background:#111111f2}
+.reel-nav{-webkit-backdrop-filter:none;backdrop-filter:none}
+}

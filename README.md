@@ -21,3 +21,7 @@ GitHub Pages publica la raíz al recibir el push. La fotografía de perfil se in
 La carpeta `maxijuegos/` de la raíz contiene la exportación web del juego (Godot 4, sin hilos y sin sonido) y se publica tal cual: no pasa por Vite. `npm run dev` y `npm run start` la sirven desde ahí.
 
 Para actualizarla, exportar el preset `Web` en el repositorio de MaxiJuegos y copiar `index.js`, `index.wasm`, `index.pck` y los dos `index.audio*.js` a `maxijuegos/`. El `index.html` de esa carpeta es propio del portfolio (pantalla de carga): si cambia el tamaño de `index.wasm` o `index.pck`, actualizar `fileSizes` en ese archivo.
+
+## Capturas de los proyectos
+
+Cada captura de `source/public/assets/shots/` tiene dos copias reducidas: `sm/` (960 px de ancho, la que carga el móvil) y `thumb/` (320 px, las miniaturas del carrusel en escritorio). Al añadir una captura nueva hay que crear también esas dos copias, porque las capturas grandes llenan la memoria de Safari en iPhone y la pestaña se recarga sola.
