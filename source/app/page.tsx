@@ -226,6 +226,9 @@ export default function Home(){
   useEffect(()=>{
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
     const root = document.documentElement;
+    const bar = document.querySelector<HTMLElement>('.scroll-progress');
+    // The card stacking only exists on wide screens (see globals.css), so phones skip measuring every card on each frame.
+    const stacking = window.matchMedia('(min-width: 1100px)');
     const hero = document.querySelector<HTMLElement>('.hero');
     const ribbon = document.querySelector<HTMLElement>('.tech-ribbon');
     const tagSection = document.querySelector<HTMLElement>('.tagline');
@@ -236,7 +239,8 @@ export default function Home(){
     const update = ()=>{
       frame = 0;
       const y = window.scrollY, vh = window.innerHeight;
-      root.style.setProperty('--page-progress',String(clamp(y/(root.scrollHeight-vh))));
+      // Set on the bar itself: a custom property on <html> makes the browser restyle the whole page on every scroll frame.
+      bar?.style.setProperty('--page-progress',String(clamp(y/(root.scrollHeight-vh))));
       if(hero)hero.style.setProperty('--hero-out',String(clamp(y/(hero.offsetHeight*0.85))));
       skew += ((y-lastY)*0.12 - skew)*0.2; lastY = y;
       if(ribbon)ribbon.style.setProperty('--skew',`${Math.max(-8,Math.min(8,skew)).toFixed(2)}deg`);
@@ -246,7 +250,7 @@ export default function Home(){
         const lit = Math.round(progress*words.length);
         words.forEach((w,i)=>w.classList.toggle('lit',i<lit));
       }
-      projects.forEach((p,i)=>{
+      if(stacking.matches)projects.forEach((p,i)=>{
         const next = projects[i+1];
         const amount = next ? clamp(1 - next.getBoundingClientRect().top/vh) : 0;
         p.style.setProperty('--stack',amount.toFixed(3));
@@ -266,6 +270,13 @@ export default function Home(){
     window.addEventListener('scroll',onScroll,{passive:true});
     window.addEventListener('resize',onResize);
     return ()=>{window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onResize);cancelAnimationFrame(frame)};
+  },[]);
+
+  // Endless decorative animations (ribbon, orbit, poster wall, hero badge) pause while off screen, so the phone is not repainting what nobody sees.
+  useEffect(()=>{
+    const observer = new IntersectionObserver(entries=>entries.forEach(entry=>entry.target.classList.toggle('is-offscreen',!entry.isIntersecting)),{rootMargin:'200px 0px'});
+    document.querySelectorAll('.hero,.tech-ribbon,.game-stage,.orbit').forEach(el=>observer.observe(el));
+    return ()=>observer.disconnect();
   },[]);
 
   const closeMenu = ()=>setMenuOpen(false);

@@ -44,15 +44,21 @@ export function ShotReel({shots,site,href,label}:{shots:Shot[];site:string;href:
     </div>
     <div className="reel-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} aria-live={running?'off':'polite'}>
       {shots.map((shot,i)=>{
+        // Only the current capture and its neighbours stay in the page: every decoded capture costs memory, and iPhone Safari reloads the tab when it runs out.
+        const near = Math.min((i-index+shots.length)%shots.length,(index-i+shots.length)%shots.length) <= 1;
+        if(!near)return null;
         const tall = shot.height/shot.width > 0.75;
-        return <img key={shot.file} className={`${tall?'is-tall':'is-wide'}${i===index?' is-active':''}`} src={`${BASE}assets/shots/${shot.file}`} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" aria-hidden={i!==index}/>
+        return <picture key={shot.file}>
+          <source media="(max-width: 760px)" srcSet={`${BASE}assets/shots/sm/${shot.file}`}/>
+          <img className={`${tall?'is-tall':'is-wide'}${i===index?' is-active':''}`} src={`${BASE}assets/shots/${shot.file}`} alt={shot.alt} width={shot.width} height={shot.height} loading="lazy" decoding="async" aria-hidden={i!==index}/>
+        </picture>
       })}
       <button type="button" className="reel-nav prev" onClick={()=>go(index-1)} aria-label="Captura anterior"><CaretLeft size={20}/></button>
       <button type="button" className="reel-nav next" onClick={()=>go(index+1)} aria-label="Captura siguiente"><CaretRight size={20}/></button>
     </div>
     <ol className="reel-tabs">{shots.map((shot,i)=><li key={shot.file}>
       <button type="button" className={i===index?'is-active':undefined} onClick={()=>go(i)} aria-current={i===index?'true':undefined}>
-        <span className="reel-thumb"><img src={`${BASE}assets/shots/${shot.file}`} alt="" width={shot.width} height={shot.height} loading="lazy" decoding="async"/></span>
+        <span className="reel-thumb"><img src={`${BASE}assets/shots/thumb/${shot.file}`} alt="" width="320" height={Math.round(320*shot.height/shot.width)} loading="lazy" decoding="async"/></span>
         <span className="reel-title">{shot.title}</span>
         <span className="reel-progress" aria-hidden="true"><i key={`${index}-${i}`} style={{animationDuration:`${DURATION}ms`}} onAnimationEnd={()=>{if(i===index)go(index+1)}}/></span>
       </button>
