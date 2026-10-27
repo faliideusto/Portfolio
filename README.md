@@ -18,9 +18,7 @@ GitHub Pages publica la raíz al recibir el push. La fotografía de perfil se in
 
 ## MaxiJuegos (proyecto 04, jugable)
 
-La carpeta `maxijuegos/` de la raíz contiene la exportación web del juego (Godot 4, sin hilos y sin sonido) y se publica tal cual: no pasa por Vite. `npm run dev` y `npm run start` la sirven desde ahí.
-
-Para actualizarla, exportar el preset `Web` en el repositorio de MaxiJuegos y copiar `index.js`, `index.wasm`, `index.pck` y los dos `index.audio*.js` a `maxijuegos/`. El `index.html` de esa carpeta es propio del portfolio (pantalla de carga): si cambia el tamaño de `index.wasm` o `index.pck`, actualizar `fileSizes` en ese archivo.
+El juego se publica en su propia web, https://maxijuegos.vercel.app/ (con música y salas online por código). El repositorio de MaxiJuegos la exporta y la publica solo en cada push a `main`, así que el portfolio no guarda ninguna copia: la tarjeta la abre en un iframe ("Jugar ahora") o en una pestaña nueva ("Jugar con amigos").
 
 ## Capturas de los proyectos
 
